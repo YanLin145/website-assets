@@ -21,8 +21,9 @@
       justify-content: center;
 
       width: 100%;
+      box-sizing: border-box;
 
-      /* Та самая настройка, с которой всё работало */
+      /* Наш идеальный запас для анимации */
       padding: 50%;
     }
 
@@ -51,14 +52,34 @@
 
   <a
     class="art-button"
-    href="https://yanisky.notion.site/Darkflowertale-cbdeb1a059134069abb1d192c36dcfd0"
+    id="button-link"
+    href="#"
     target="_blank"
   >
     <img
-      src="../kitty-Scarameow.gif"
-      alt="Darkflowertale"
+      id="button-image"
+      src=""
+      alt="Interactive button"
     >
   </a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const image = params.get("image");
+    const link = params.get("link");
+
+    const buttonImage = document.getElementById("button-image");
+    const buttonLink = document.getElementById("button-link");
+
+    if (image) {
+      buttonImage.src = "../" + image;
+    }
+
+    if (link) {
+      buttonLink.href = link;
+    }
+  </script>
 
 </body>
 
