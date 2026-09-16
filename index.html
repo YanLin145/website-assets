@@ -3,265 +3,556 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>My Website Widgets</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
+    html,
     body {
-      font-family: Arial, sans-serif;
-
-      max-width: 760px;
-
-      margin: 60px auto;
-      padding: 0 25px 80px;
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
 
       background: #ffffff;
       color: #222222;
+
+      font-family: Arial, sans-serif;
     }
 
+    body {
+      padding: 40px 20px 70px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
     h1 {
-      margin-bottom: 8px;
+      margin: 0 0 8px;
+      font-size: 30px;
     }
-
-
-    .intro {
-      color: #666666;
-      margin-bottom: 40px;
-    }
-
 
     h2 {
-      margin-top: 0;
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .subtitle {
+      margin: 0 0 30px;
+
+      opacity: 0.6;
+      line-height: 1.5;
     }
 
 
-    /* GENERATOR */
+    /* ===================================== */
+    /* TABS                                  */
+    /* ===================================== */
 
-    .generator {
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      margin-bottom: 25px;
+
+      border-bottom: 1px solid #dddddd;
+    }
+
+    .tab-button {
+      appearance: none;
+
+      margin-bottom: -1px;
+      padding: 12px 16px;
+
+      border: 0;
+      border-bottom: 2px solid transparent;
+
+      background: transparent;
+      color: inherit;
+
+      font: inherit;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      opacity: 0.45;
+
+      transition:
+        opacity 0.15s ease,
+        border-color 0.15s ease;
+    }
+
+    .tab-button:hover {
+      opacity: 0.8;
+    }
+
+    .tab-button.active {
+      opacity: 1;
+      border-bottom-color: currentColor;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+
+    /* ===================================== */
+    /* TOOL PANEL                            */
+    /* ===================================== */
+
+    .tool-panel {
       padding: 25px;
 
       border: 1px solid #dddddd;
       border-radius: 14px;
-
-      margin-bottom: 40px;
     }
 
+    .description {
+      margin: 0 0 25px;
+
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+
+
+    /* ===================================== */
+    /* FORM                                  */
+    /* ===================================== */
+
+    .field {
+      margin-bottom: 18px;
+    }
 
     label {
       display: block;
 
-      font-size: 14px;
-      font-weight: bold;
-
-      margin-top: 18px;
       margin-bottom: 7px;
+
+      font-size: 14px;
+      font-weight: 600;
     }
 
-
     input {
-      display: block;
-
       width: 100%;
 
-      padding: 12px 14px;
+      padding: 11px 12px;
 
       border: 1px solid #cccccc;
       border-radius: 8px;
 
-      font-size: 15px;
+      background: transparent;
+      color: inherit;
+
+      font: inherit;
     }
 
-
     input:focus {
-      outline: 2px solid #999999;
+      outline: 2px solid currentColor;
       outline-offset: 1px;
     }
 
+    .hint {
+      margin-top: 6px;
 
-    button {
-      padding: 12px 18px;
+      font-size: 12px;
+      line-height: 1.5;
 
-      border: 0;
+      opacity: 0.5;
+    }
+
+
+    /* ===================================== */
+    /* ACTION BUTTONS                        */
+    /* ===================================== */
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      margin-top: 22px;
+    }
+
+    .action-button {
+      appearance: none;
+
+      padding: 10px 14px;
+
+      border: 1px solid #aaaaaa;
       border-radius: 8px;
 
-      background: #222222;
-      color: #ffffff;
+      background: transparent;
+      color: inherit;
 
-      font-size: 15px;
+      font: inherit;
 
       cursor: pointer;
 
-      transition: transform 0.15s ease;
+      transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+    }
+
+    .action-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .action-button.primary {
+      background: #222222;
+      color: #ffffff;
+      border-color: #222222;
     }
 
 
-    button:hover {
-      transform: scale(1.03);
-    }
+    /* ===================================== */
+    /* RESULTS                               */
+    /* ===================================== */
 
-
-    .create-button {
-      margin-top: 20px;
-    }
-
-
-    /* RESULT */
-
-    .result {
+    .result-area {
       display: none;
 
-      margin-top: 25px;
-      padding-top: 20px;
+      margin-top: 30px;
+      padding-top: 25px;
 
-      border-top: 1px solid #eeeeee;
+      border-top: 1px solid #dddddd;
     }
 
+    .result-area.visible {
+      display: block;
+    }
+
+    .result-title {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
 
     .result-url {
+      width: 100%;
+
       padding: 12px;
 
-      background: #f5f5f5;
-
+      border: 1px solid #cccccc;
       border-radius: 8px;
 
+      overflow-wrap: anywhere;
+
+      font-family: monospace;
       font-size: 13px;
-
-      word-break: break-all;
-
-      margin-top: 10px;
-      margin-bottom: 10px;
+      line-height: 1.5;
     }
-
-
-    .copy-message {
-      display: none;
-
-      margin-top: 10px;
-
-      font-size: 13px;
-      color: #666666;
-    }
-
-
-    /* PREVIEW */
 
     .preview-title {
       margin-top: 25px;
       margin-bottom: 10px;
 
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 600;
     }
 
-
-    iframe {
+    .preview-frame {
       width: 100%;
-      height: 320px;
-
-      border: 1px solid #eeeeee;
-      border-radius: 8px;
-
-      background: #ffffff;
-    }
-
-
-    /* SAVE + CLEAR */
-
-    .result-actions {
-      display: flex;
-
-      gap: 10px;
-
-      margin-top: 18px;
-
-      flex-wrap: wrap;
-    }
-
-
-    .save-button {
-      background: #222222;
-    }
-
-
-    .clear-button {
-      background: #eeeeee;
-      color: #222222;
-    }
-
-
-    /* WIDGET LIBRARY */
-
-    .widgets-title {
-      margin-top: 45px;
-      margin-bottom: 18px;
-    }
-
-
-    .widgets-grid {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 14px;
-
-      align-items: flex-start;
-    }
-
-
-    .saved-widget {
-      width: 90px;
-      height: 90px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 8px;
+      height: 380px;
 
       border: 1px solid #dddddd;
       border-radius: 10px;
 
-      background: #fafafa;
-
-      cursor: pointer;
-
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+      overflow: hidden;
     }
 
-
-    .saved-widget:hover {
-      transform: scale(1.07);
-      border-color: #aaaaaa;
-    }
-
-
-    .saved-widget img {
+    .preview-frame iframe {
       display: block;
 
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+    }
+
+
+    /* ===================================== */
+    /* NOTEBOOK SUMMARY                      */
+    /* ===================================== */
+
+    .notebook-summary {
+      display: none;
+
+      margin-top: 20px;
+      padding: 15px;
+
+      border: 1px solid #dddddd;
+      border-radius: 10px;
+
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .notebook-summary.visible {
+      display: block;
+    }
+
+    .cover-line {
+      margin-bottom: 7px;
+      opacity: 0.6;
+    }
+
+
+    /* ===================================== */
+    /* MESSAGES                              */
+    /* ===================================== */
+
+    .message {
+      display: none;
+
+      margin-top: 12px;
+
+      font-size: 13px;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+
+    /* ===================================== */
+    /* MY WIDGETS                            */
+    /* ===================================== */
+
+    .library {
+      margin-top: 50px;
+      padding-top: 30px;
+
+      border-top: 1px solid #dddddd;
+    }
+
+    .library h2 {
+      margin-bottom: 18px;
+    }
+
+    .widget-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .widget-item {
+      position: relative;
+
+      width: 105px;
+    }
+
+    .widget-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 105px;
+      height: 105px;
+
+      border: 1px solid #dddddd;
+      border-radius: 12px;
+
+      overflow: hidden;
+
+      background: transparent;
+
+      text-decoration: none;
+
+      transition:
+        transform 0.15s ease;
+    }
+
+    .widget-preview:hover {
+      transform: translateY(-2px);
+    }
+
+    .widget-preview img {
+      display: block;
+
+      max-width: 88%;
+      max-height: 88%;
 
       width: auto;
       height: auto;
 
       object-fit: contain;
+    }
 
-      image-rendering: pixelated;
+    .widget-placeholder {
+      font-size: 38px;
+      opacity: 0.55;
+    }
+
+    .widget-name {
+      margin-top: 7px;
+
+      overflow: hidden;
+
+      text-align: center;
+
+      font-size: 11px;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      opacity: 0.55;
     }
 
 
-    .empty-widgets {
-      color: #888888;
-      font-size: 14px;
+    /* ===================================== */
+    /* DELETE WIDGET BUTTON                  */
+    /* ===================================== */
+
+    .delete-widget {
+      position: absolute;
+
+      top: -7px;
+      right: -7px;
+
+      z-index: 5;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 24px;
+      height: 24px;
+
+      padding: 0;
+
+      border: 1px solid #cccccc;
+      border-radius: 50%;
+
+      background: #ffffff;
+      color: #222222;
+
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1;
+
+      cursor: pointer;
+
+      opacity: 0;
+
+      transform: scale(0.85);
+
+      transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .widget-item:hover .delete-widget,
+    .delete-widget:focus {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .delete-widget:hover {
+      transform: scale(1.12);
+    }
+
+
+    /* ===================================== */
+    /* DARK MODE                             */
+    /* ===================================== */
+
+    @media (prefers-color-scheme: dark) {
+
+      html,
+      body {
+        background: #191919;
+        color: #ffffff;
+      }
+
+      .tabs,
+      .library,
+      .result-area {
+        border-color: #444444;
+      }
+
+      .tool-panel,
+      .preview-frame,
+      .widget-preview,
+      .notebook-summary {
+        border-color: #444444;
+      }
+
+      input,
+      .result-url {
+        border-color: #555555;
+      }
+
+      .action-button {
+        border-color: #666666;
+      }
+
+      .action-button.primary {
+        background: #ffffff;
+        color: #191919;
+        border-color: #ffffff;
+      }
+
+      .delete-widget {
+        background: #292929;
+        color: #ffffff;
+        border-color: #555555;
+      }
+
+    }
+
+
+    /* ===================================== */
+    /* TOUCH DEVICES                         */
+    /* ===================================== */
+
+    @media (hover: none) {
+
+      .delete-widget {
+        opacity: 0.7;
+        transform: scale(1);
+      }
+
+    }
+
+
+    /* ===================================== */
+    /* MOBILE                                */
+    /* ===================================== */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding:
+          25px
+          14px
+          50px;
+      }
+
+      .tool-panel {
+        padding: 18px;
+      }
+
+      .preview-frame {
+        height: 300px;
+      }
+
     }
 
   </style>
@@ -270,463 +561,1538 @@
 
 <body>
 
-  <h1>My Website Widgets</h1>
+  <main class="container">
 
-  <p class="intro">
-    Интерактивные элементы для моего сайта.
-  </p>
+    <h1>My Website Widgets</h1>
 
-
-  <div class="generator">
-
-    <h2>✨ Interactive Button Generator</h2>
-
-    <p>
-      Создай интерактивную кнопку для Notion
-      с увеличением и поворотом при наведении.
+    <p class="subtitle">
+      Маленькая мастерская для создания интерактивных элементов моего сайта.
     </p>
 
 
-    <label for="image">
-      Имя изображения на GitHub
-    </label>
+    <!-- ================================= -->
+    <!-- TABS                              -->
+    <!-- ================================= -->
 
-    <input
-      id="image"
-      type="text"
-      placeholder="например: kitty-Scarameow.gif"
-    >
+    <nav class="tabs">
 
-
-    <label for="link">
-      Куда должна вести кнопка
-    </label>
-
-    <input
-      id="link"
-      type="url"
-      placeholder="https://..."
-    >
-
-
-    <button
-      class="create-button"
-      onclick="createButton()"
-    >
-      Создать кнопку
-    </button>
-
-
-    <div
-      class="result"
-      id="result"
-    >
-
-      <strong>
-        Ссылка для Notion Embed:
-      </strong>
-
-
-      <div
-        class="result-url"
-        id="result-url"
-      ></div>
-
-
-      <button onclick="copyURL()">
-        Скопировать ссылку
+      <button
+        class="tab-button active"
+        data-tab="button-tool"
+      >
+        Interactive Button
       </button>
 
+      <button
+        class="tab-button"
+        data-tab="notebook-tool"
+      >
+        Notebook Viewer
+      </button>
+
+    </nav>
+
+
+    <!-- ================================= -->
+    <!-- INTERACTIVE BUTTON                -->
+    <!-- ================================= -->
+
+    <section
+      class="tab-content active"
+      id="button-tool"
+    >
+
+      <div class="tool-panel">
+
+        <h2>Interactive Button</h2>
+
+        <p class="description">
+          Создай кликабельное изображение с анимацией при наведении.
+        </p>
+
+
+        <div class="field">
+
+          <label for="button-image">
+            Путь к изображению
+          </label>
+
+          <input
+            id="button-image"
+            type="text"
+            placeholder="assets/gif/kitty-Scarameow.gif"
+          >
+
+          <div class="hint">
+            Можно использовать любую картинку внутри website-assets.
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="button-link">
+            Куда ведёт кнопка
+          </label>
+
+          <input
+            id="button-link"
+            type="url"
+            placeholder="https://..."
+          >
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="action-button primary"
+            id="create-button"
+          >
+            Создать кнопку
+          </button>
+
+          <button
+            class="action-button"
+            id="clear-button"
+          >
+            Очистить
+          </button>
+
+        </div>
+
+
+        <div
+          class="result-area"
+          id="button-result"
+        >
+
+          <h3 class="result-title">
+            Готовая ссылка
+          </h3>
+
+          <div
+            class="result-url"
+            id="button-url"
+          ></div>
+
+
+          <div class="actions">
+
+            <button
+              class="action-button"
+              id="copy-button"
+            >
+              Скопировать ссылку
+            </button>
+
+            <button
+              class="action-button"
+              id="save-button"
+            >
+              Сохранить?
+            </button>
+
+          </div>
+
+
+          <div class="preview-title">
+            Предпросмотр
+          </div>
+
+          <div class="preview-frame">
+
+            <iframe
+              id="button-preview"
+              title="Interactive Button Preview"
+            ></iframe>
+
+          </div>
+
+
+          <div
+            class="message"
+            id="button-message"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- NOTEBOOK VIEWER                   -->
+    <!-- ================================= -->
+
+    <section
+      class="tab-content"
+      id="notebook-tool"
+    >
+
+      <div class="tool-panel">
+
+        <h2>Notebook Viewer</h2>
+
+        <p class="description">
+          Создай листаемый скетчбук.
+          Файл _00 используется как обложка,
+          а страницы автоматически начинаются с _01.
+        </p>
+
+
+        <div class="field">
+
+          <label for="notebook-name">
+            Название блокнота
+          </label>
+
+          <input
+            id="notebook-name"
+            type="text"
+            placeholder="Green Sketchbook"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="notebook-folder">
+            Папка
+          </label>
+
+          <input
+            id="notebook-folder"
+            type="text"
+            placeholder="assets/notebooks/green_sketchbook/"
+          >
+
+          <div class="hint">
+            Путь от корня website-assets.
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="notebook-prefix">
+            Префикс файлов
+          </label>
+
+          <input
+            id="notebook-prefix"
+            type="text"
+            placeholder="green_sketchbook"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="notebook-count">
+            Количество страниц
+          </label>
+
+          <input
+            id="notebook-count"
+            type="number"
+            min="1"
+            step="1"
+            placeholder="3"
+          >
+
+          <div class="hint">
+            Обложка _00 сюда не входит.
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="action-button primary"
+            id="create-notebook"
+          >
+            Создать блокнот
+          </button>
+
+          <button
+            class="action-button"
+            id="clear-notebook"
+          >
+            Очистить
+          </button>
+
+        </div>
+
+
+        <div
+          class="notebook-summary"
+          id="notebook-summary"
+        ></div>
+
+
+        <div
+          class="result-area"
+          id="notebook-result"
+        >
+
+          <h3 class="result-title">
+            Готовая ссылка
+          </h3>
+
+          <div
+            class="result-url"
+            id="notebook-url"
+          ></div>
+
+
+          <div class="actions">
+
+            <button
+              class="action-button"
+              id="copy-notebook"
+            >
+              Скопировать ссылку
+            </button>
+
+            <button
+              class="action-button"
+              id="save-notebook"
+            >
+              Сохранить?
+            </button>
+
+          </div>
+
+
+          <div class="preview-title">
+            Предпросмотр
+          </div>
+
+          <div class="preview-frame">
+
+            <iframe
+              id="notebook-preview"
+              title="Notebook Preview"
+            ></iframe>
+
+          </div>
+
+
+          <div
+            class="message"
+            id="notebook-message"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- MY WIDGETS                        -->
+    <!-- ================================= -->
+
+    <section class="library">
+
+      <h2>My Widgets</h2>
 
       <div
-        class="copy-message"
-        id="copy-message"
-      >
-        Скопировано ✓
-      </div>
+        class="widget-grid"
+        id="widget-grid"
+      ></div>
 
+    </section>
 
-      <div class="preview-title">
-        Предпросмотр:
-      </div>
-
-
-      <iframe
-        id="preview"
-        title="Button preview"
-      ></iframe>
-
-
-      <div class="result-actions">
-
-        <button
-          class="save-button"
-          onclick="saveWidget()"
-        >
-          Сохранить?
-        </button>
-
-
-        <button
-          class="clear-button"
-          onclick="clearForm()"
-        >
-          Очистить форму
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <h2 class="widgets-title">
-    Widgets
-  </h2>
-
-
-  <div
-    class="widgets-grid"
-    id="widgets-grid"
-  ></div>
+  </main>
 
 
   <script>
 
-    let generatedURL = "";
+    /* ===================================== */
+    /* SETTINGS                              */
+    /* ===================================== */
+
+    const STORAGE_KEY =
+      "myWebsiteWidgets";
 
 
-    /*
-      Создание ссылки
-    */
+    /* ===================================== */
+    /* TABS                                  */
+    /* ===================================== */
 
-    function createButton() {
+    const tabButtons =
+      document.querySelectorAll(
+        ".tab-button"
+      );
 
-      const image =
-        document
-          .getElementById("image")
-          .value
-          .trim();
-
-
-      const link =
-        document
-          .getElementById("link")
-          .value
-          .trim();
+    const tabContents =
+      document.querySelectorAll(
+        ".tab-content"
+      );
 
 
-      if (!image) {
+    tabButtons.forEach(
+      function (button) {
 
-        alert("Укажи имя изображения.");
+        button.addEventListener(
+          "click",
+          function () {
 
-        return;
+            const target =
+              button.dataset.tab;
+
+
+            tabButtons.forEach(
+              function (item) {
+
+                item.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+            tabContents.forEach(
+              function (item) {
+
+                item.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            document
+              .getElementById(target)
+              .classList
+              .add("active");
+
+          }
+        );
+
       }
+    );
 
 
-      if (!link) {
+    /* ===================================== */
+    /* STORAGE                               */
+    /* ===================================== */
 
-        alert("Вставь ссылку для кнопки.");
-
-        return;
-      }
-
-
-      const base =
-        window.location.origin +
-        window.location.pathname +
-        "button/";
-
-
-      generatedURL =
-        base +
-        "?image=" +
-        encodeURIComponent(image) +
-        "&link=" +
-        encodeURIComponent(link);
-
-
-      document
-        .getElementById("result-url")
-        .textContent =
-        generatedURL;
-
-
-      document
-        .getElementById("preview")
-        .src =
-        generatedURL;
-
-
-      document
-        .getElementById("result")
-        .style
-        .display =
-        "block";
-
-
-      document
-        .getElementById("copy-message")
-        .style
-        .display =
-        "none";
-    }
-
-
-
-    /*
-      Копирование ссылки
-    */
-
-    async function copyURL() {
-
-      if (!generatedURL) {
-        return;
-      }
-
+    function getWidgets() {
 
       try {
 
-        await navigator.clipboard.writeText(
-          generatedURL
-        );
+        const saved =
+          localStorage.getItem(
+            STORAGE_KEY
+          );
 
 
-        document
-          .getElementById("copy-message")
-          .style
-          .display =
-          "block";
+        if (!saved) {
+          return [];
+        }
+
+
+        const widgets =
+          JSON.parse(saved);
+
+
+        if (
+          Array.isArray(widgets)
+        ) {
+          return widgets;
+        }
+
+
+        return [];
 
       }
-
       catch (error) {
 
-        alert(
-          "Не удалось скопировать автоматически."
-        );
+        return [];
 
       }
+
     }
 
 
-
-    /*
-      Сохранение виджета
-    */
-
-    function saveWidget() {
-
-      const image =
-        document
-          .getElementById("image")
-          .value
-          .trim();
-
-
-      const link =
-        document
-          .getElementById("link")
-          .value
-          .trim();
-
-
-      if (!generatedURL || !image || !link) {
-
-        alert(
-          "Сначала создай кнопку."
-        );
-
-        return;
-      }
-
-
-      const widgets =
-        JSON.parse(
-          localStorage.getItem(
-            "myWebsiteWidgets"
-          )
-        ) || [];
-
-
-      /*
-        Не сохраняем одну и ту же
-        кнопку два раза.
-      */
-
-      const alreadyExists =
-        widgets.some(
-          widget =>
-            widget.url === generatedURL
-        );
-
-
-      if (alreadyExists) {
-
-        alert(
-          "Этот виджет уже сохранён."
-        );
-
-        return;
-      }
-
-
-      widgets.push({
-
-        image: image,
-
-        link: link,
-
-        url: generatedURL
-
-      });
-
+    function saveWidgets(
+      widgets
+    ) {
 
       localStorage.setItem(
-        "myWebsiteWidgets",
+        STORAGE_KEY,
         JSON.stringify(widgets)
+      );
+
+    }
+
+
+    function addWidget(
+      widget
+    ) {
+
+      const widgets =
+        getWidgets();
+
+
+      widgets.push(
+        widget
+      );
+
+
+      saveWidgets(
+        widgets
       );
 
 
       renderWidgets();
 
-
-      alert("Виджет сохранён ✓");
     }
 
 
+    /* ===================================== */
+    /* DELETE SAVED WIDGET                   */
+    /* ===================================== */
 
-    /*
-      Очистка формы
-    */
-
-    function clearForm() {
-
-      document
-        .getElementById("image")
-        .value =
-        "";
-
-
-      document
-        .getElementById("link")
-        .value =
-        "";
-
-
-      document
-        .getElementById("preview")
-        .src =
-        "about:blank";
-
-
-      document
-        .getElementById("result")
-        .style
-        .display =
-        "none";
-
-
-      document
-        .getElementById("copy-message")
-        .style
-        .display =
-        "none";
-
-
-      generatedURL = "";
-
-
-      document
-        .getElementById("image")
-        .focus();
-    }
-
-
-
-    /*
-      Отображение сохранённых виджетов
-    */
-
-    function renderWidgets() {
-
-      const grid =
-        document
-          .getElementById("widgets-grid");
-
-
-      grid.innerHTML = "";
-
+    function deleteWidget(
+      index
+    ) {
 
       const widgets =
-        JSON.parse(
-          localStorage.getItem(
-            "myWebsiteWidgets"
-          )
-        ) || [];
+        getWidgets();
 
 
-      if (widgets.length === 0) {
+      const widget =
+        widgets[index];
 
-        grid.innerHTML =
-          '<div class="empty-widgets">' +
-          'Здесь появятся сохранённые виджеты.' +
-          '</div>';
 
+      if (!widget) {
         return;
       }
 
 
-      widgets.forEach(widget => {
-
-        const item =
-          document.createElement("a");
-
-
-        item.className =
-          "saved-widget";
-
-
-        /*
-          Клик по маленькой картинке
-          открывает сам виджет.
-        */
-
-        item.href =
-          widget.url;
+      const widgetName =
+        widget.name ||
+        (
+          widget.type === "notebook"
+            ? "Notebook"
+            : "Button"
+        );
 
 
-        item.target =
-          "_blank";
+      const confirmed =
+        window.confirm(
+          "Удалить «" +
+          widgetName +
+          "» из My Widgets?\n\n" +
+          "Сам виджет и файлы на GitHub удалены не будут."
+        );
 
 
-        const image =
-          document.createElement("img");
+      if (!confirmed) {
+        return;
+      }
 
 
-        image.src =
-          "./" + widget.image;
+      widgets.splice(
+        index,
+        1
+      );
 
 
-        image.alt =
-          "Saved widget";
+      saveWidgets(
+        widgets
+      );
 
 
-        item.appendChild(image);
-
-        grid.appendChild(item);
-
-      });
+      renderWidgets();
 
     }
 
 
+    /* ===================================== */
+    /* PATH HELPERS                          */
+    /* ===================================== */
 
-    /*
-      Показываем сохранённые кнопки
-      сразу после открытия страницы.
-    */
+    function cleanPath(
+      path
+    ) {
+
+      return path
+        .trim()
+        .replace(
+          /^\/+/,
+          ""
+        );
+
+    }
+
+
+    function normalizeFolder(
+      folder
+    ) {
+
+      folder =
+        cleanPath(folder);
+
+
+      if (
+        folder &&
+        !folder.endsWith("/")
+      ) {
+
+        folder += "/";
+
+      }
+
+
+      return folder;
+
+    }
+
+
+    function assetUrl(
+      path
+    ) {
+
+      return new URL(
+        cleanPath(path),
+        window.location.href
+      ).toString();
+
+    }
+
+
+    /* ===================================== */
+    /* LIBRARY                               */
+    /* ===================================== */
+
+    const widgetGrid =
+      document.getElementById(
+        "widget-grid"
+      );
+
+
+    function renderWidgets() {
+
+      const widgets =
+        getWidgets();
+
+
+      widgetGrid.innerHTML =
+        "";
+
+
+      if (
+        widgets.length === 0
+      ) {
+
+        const empty =
+          document.createElement(
+            "div"
+          );
+
+
+        empty.textContent =
+          "Пока ничего не сохранено.";
+
+
+        empty.style.opacity =
+          "0.5";
+
+
+        empty.style.fontSize =
+          "14px";
+
+
+        widgetGrid.appendChild(
+          empty
+        );
+
+
+        return;
+
+      }
+
+
+      widgets.forEach(
+        function (
+          widget,
+          index
+        ) {
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "widget-item";
+
+
+          /* DELETE BUTTON */
+
+          const deleteButton =
+            document.createElement(
+              "button"
+            );
+
+
+          deleteButton.className =
+            "delete-widget";
+
+
+          deleteButton.type =
+            "button";
+
+
+          deleteButton.textContent =
+            "×";
+
+
+          deleteButton.title =
+            "Удалить из My Widgets";
+
+
+          deleteButton.setAttribute(
+            "aria-label",
+            "Удалить виджет"
+          );
+
+
+          deleteButton.addEventListener(
+            "click",
+            function (event) {
+
+              event.preventDefault();
+              event.stopPropagation();
+
+              deleteWidget(
+                index
+              );
+
+            }
+          );
+
+
+          /* PREVIEW */
+
+          const preview =
+            document.createElement(
+              "a"
+            );
+
+
+          preview.className =
+            "widget-preview";
+
+
+          preview.href =
+            widget.url || "#";
+
+
+          preview.target =
+            "_blank";
+
+
+          let imagePath =
+            widget.preview ||
+            widget.cover ||
+            widget.image ||
+            "";
+
+
+          if (imagePath) {
+
+            const image =
+              document.createElement(
+                "img"
+              );
+
+
+            if (
+              imagePath.startsWith(
+                "http://"
+              ) ||
+              imagePath.startsWith(
+                "https://"
+              )
+            ) {
+
+              image.src =
+                imagePath;
+
+            }
+            else {
+
+              image.src =
+                assetUrl(
+                  imagePath
+                );
+
+            }
+
+
+            preview.appendChild(
+              image
+            );
+
+          }
+          else {
+
+            const placeholder =
+              document.createElement(
+                "div"
+              );
+
+
+            placeholder.className =
+              "widget-placeholder";
+
+
+            placeholder.textContent =
+              widget.type === "notebook"
+                ? "📖"
+                : "✦";
+
+
+            preview.appendChild(
+              placeholder
+            );
+
+          }
+
+
+          /* NAME */
+
+          const name =
+            document.createElement(
+              "div"
+            );
+
+
+          name.className =
+            "widget-name";
+
+
+          name.textContent =
+            widget.name ||
+            (
+              widget.type === "notebook"
+                ? "Notebook"
+                : "Button"
+            );
+
+
+          item.appendChild(
+            deleteButton
+          );
+
+
+          item.appendChild(
+            preview
+          );
+
+
+          item.appendChild(
+            name
+          );
+
+
+          widgetGrid.appendChild(
+            item
+          );
+
+        }
+      );
+
+    }
+
+
+    /* ===================================== */
+    /* MESSAGES                              */
+    /* ===================================== */
+
+    function showMessage(
+      element,
+      text
+    ) {
+
+      element.textContent =
+        text;
+
+
+      element
+        .classList
+        .add("visible");
+
+
+      setTimeout(
+        function () {
+
+          element
+            .classList
+            .remove("visible");
+
+        },
+        1800
+      );
+
+    }
+
+
+    /* ===================================== */
+    /* COPY                                  */
+    /* ===================================== */
+
+    async function copyText(
+      text,
+      message
+    ) {
+
+      try {
+
+        await navigator
+          .clipboard
+          .writeText(text);
+
+
+        showMessage(
+          message,
+          "Ссылка скопирована ✓"
+        );
+
+      }
+      catch (error) {
+
+        showMessage(
+          message,
+          "Не получилось скопировать автоматически."
+        );
+
+      }
+
+    }
+
+
+    /* ===================================== */
+    /* INTERACTIVE BUTTON                    */
+    /* ===================================== */
+
+    const buttonImage =
+      document.getElementById(
+        "button-image"
+      );
+
+    const buttonLink =
+      document.getElementById(
+        "button-link"
+      );
+
+    const createButton =
+      document.getElementById(
+        "create-button"
+      );
+
+    const clearButton =
+      document.getElementById(
+        "clear-button"
+      );
+
+    const buttonResult =
+      document.getElementById(
+        "button-result"
+      );
+
+    const buttonUrl =
+      document.getElementById(
+        "button-url"
+      );
+
+    const buttonPreview =
+      document.getElementById(
+        "button-preview"
+      );
+
+    const copyButton =
+      document.getElementById(
+        "copy-button"
+      );
+
+    const saveButton =
+      document.getElementById(
+        "save-button"
+      );
+
+    const buttonMessage =
+      document.getElementById(
+        "button-message"
+      );
+
+
+    let currentButtonUrl =
+      "";
+
+
+    createButton.addEventListener(
+      "click",
+      function () {
+
+        const image =
+          cleanPath(
+            buttonImage.value
+          );
+
+
+        const link =
+          buttonLink
+            .value
+            .trim();
+
+
+        if (!image) {
+
+          alert(
+            "Укажи путь к изображению."
+          );
+
+          return;
+
+        }
+
+
+        if (!link) {
+
+          alert(
+            "Укажи ссылку, куда должна вести кнопка."
+          );
+
+          return;
+
+        }
+
+
+        const url =
+          new URL(
+            "./button/",
+            window.location.href
+          );
+
+
+        url.searchParams.set(
+          "image",
+          image
+        );
+
+
+        url.searchParams.set(
+          "link",
+          link
+        );
+
+
+        currentButtonUrl =
+          url.toString();
+
+
+        buttonUrl.textContent =
+          currentButtonUrl;
+
+
+        buttonPreview.src =
+          currentButtonUrl;
+
+
+        buttonResult
+          .classList
+          .add("visible");
+
+      }
+    );
+
+
+    copyButton.addEventListener(
+      "click",
+      function () {
+
+        if (!currentButtonUrl) {
+          return;
+        }
+
+
+        copyText(
+          currentButtonUrl,
+          buttonMessage
+        );
+
+      }
+    );
+
+
+    saveButton.addEventListener(
+      "click",
+      function () {
+
+        if (!currentButtonUrl) {
+          return;
+        }
+
+
+        const image =
+          cleanPath(
+            buttonImage.value
+          );
+
+
+        addWidget({
+
+          type:
+            "button",
+
+          name:
+            image
+              .split("/")
+              .pop(),
+
+          image:
+            image,
+
+          preview:
+            image,
+
+          url:
+            currentButtonUrl
+
+        });
+
+
+        showMessage(
+          buttonMessage,
+          "Кнопка сохранена ✓"
+        );
+
+      }
+    );
+
+
+    clearButton.addEventListener(
+      "click",
+      function () {
+
+        buttonImage.value =
+          "";
+
+        buttonLink.value =
+          "";
+
+        currentButtonUrl =
+          "";
+
+        buttonUrl.textContent =
+          "";
+
+        buttonPreview.src =
+          "";
+
+
+        buttonResult
+          .classList
+          .remove("visible");
+
+
+        buttonImage.focus();
+
+      }
+    );
+
+
+    /* ===================================== */
+    /* NOTEBOOK                              */
+    /* ===================================== */
+
+    const notebookName =
+      document.getElementById(
+        "notebook-name"
+      );
+
+    const notebookFolder =
+      document.getElementById(
+        "notebook-folder"
+      );
+
+    const notebookPrefix =
+      document.getElementById(
+        "notebook-prefix"
+      );
+
+    const notebookCount =
+      document.getElementById(
+        "notebook-count"
+      );
+
+    const createNotebook =
+      document.getElementById(
+        "create-notebook"
+      );
+
+    const clearNotebook =
+      document.getElementById(
+        "clear-notebook"
+      );
+
+    const notebookSummary =
+      document.getElementById(
+        "notebook-summary"
+      );
+
+    const notebookResult =
+      document.getElementById(
+        "notebook-result"
+      );
+
+    const notebookUrl =
+      document.getElementById(
+        "notebook-url"
+      );
+
+    const notebookPreview =
+      document.getElementById(
+        "notebook-preview"
+      );
+
+    const copyNotebook =
+      document.getElementById(
+        "copy-notebook"
+      );
+
+    const saveNotebook =
+      document.getElementById(
+        "save-notebook"
+      );
+
+    const notebookMessage =
+      document.getElementById(
+        "notebook-message"
+      );
+
+
+    let currentNotebookUrl =
+      "";
+
+    let currentNotebookCover =
+      "";
+
+
+    function formatPageNumber(
+      number
+    ) {
+
+      return String(number)
+        .padStart(
+          2,
+          "0"
+        );
+
+    }
+
+
+    createNotebook.addEventListener(
+      "click",
+      function () {
+
+        const folder =
+          normalizeFolder(
+            notebookFolder.value
+          );
+
+
+        const prefix =
+          notebookPrefix
+            .value
+            .trim();
+
+
+        const count =
+          Number.parseInt(
+            notebookCount.value,
+            10
+          );
+
+
+        if (!folder) {
+
+          alert(
+            "Укажи папку блокнота."
+          );
+
+          return;
+
+        }
+
+
+        if (!prefix) {
+
+          alert(
+            "Укажи префикс файлов."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !Number.isInteger(count) ||
+          count < 1
+        ) {
+
+          alert(
+            "Укажи количество страниц."
+          );
+
+          return;
+
+        }
+
+
+        const pages =
+          [];
+
+
+        for (
+          let page = 1;
+          page <= count;
+          page++
+        ) {
+
+          const filename =
+            prefix +
+            "_" +
+            formatPageNumber(page) +
+            ".png";
+
+
+          pages.push(
+            folder + filename
+          );
+
+        }
+
+
+        currentNotebookCover =
+          folder +
+          prefix +
+          "_00.png";
+
+
+        const url =
+          new URL(
+            "./notebook/",
+            window.location.href
+          );
+
+
+        url.searchParams.set(
+          "pages",
+          pages.join(",")
+        );
+
+
+        currentNotebookUrl =
+          url.toString();
+
+
+        notebookUrl.textContent =
+          currentNotebookUrl;
+
+
+        notebookPreview.src =
+          currentNotebookUrl;
+
+
+        let summary =
+          "<div class=\"cover-line\">" +
+          "Обложка: " +
+          currentNotebookCover +
+          "</div>";
+
+
+        pages.forEach(
+          function (
+            page,
+            index
+          ) {
+
+            summary +=
+              "<div>" +
+              (index + 1) +
+              " → " +
+              page +
+              "</div>";
+
+          }
+        );
+
+
+        notebookSummary.innerHTML =
+          summary;
+
+
+        notebookSummary
+          .classList
+          .add("visible");
+
+
+        notebookResult
+          .classList
+          .add("visible");
+
+      }
+    );
+
+
+    copyNotebook.addEventListener(
+      "click",
+      function () {
+
+        if (!currentNotebookUrl) {
+          return;
+        }
+
+
+        copyText(
+          currentNotebookUrl,
+          notebookMessage
+        );
+
+      }
+    );
+
+
+    saveNotebook.addEventListener(
+      "click",
+      function () {
+
+        if (!currentNotebookUrl) {
+          return;
+        }
+
+
+        const name =
+          notebookName
+            .value
+            .trim()
+          ||
+          notebookPrefix
+            .value
+            .trim()
+          ||
+          "Notebook";
+
+
+        addWidget({
+
+          type:
+            "notebook",
+
+          name:
+            name,
+
+          cover:
+            currentNotebookCover,
+
+          preview:
+            currentNotebookCover,
+
+          url:
+            currentNotebookUrl
+
+        });
+
+
+        showMessage(
+          notebookMessage,
+          "Блокнот сохранён ✓"
+        );
+
+      }
+    );
+
+
+    clearNotebook.addEventListener(
+      "click",
+      function () {
+
+        notebookName.value =
+          "";
+
+        notebookFolder.value =
+          "";
+
+        notebookPrefix.value =
+          "";
+
+        notebookCount.value =
+          "";
+
+
+        currentNotebookUrl =
+          "";
+
+        currentNotebookCover =
+          "";
+
+
+        notebookUrl.textContent =
+          "";
+
+        notebookPreview.src =
+          "";
+
+
+        notebookSummary.innerHTML =
+          "";
+
+
+        notebookSummary
+          .classList
+          .remove("visible");
+
+
+        notebookResult
+          .classList
+          .remove("visible");
+
+
+        notebookName.focus();
+
+      }
+    );
+
+
+    /* ===================================== */
+    /* START                                 */
+    /* ===================================== */
 
     renderWidgets();
 
