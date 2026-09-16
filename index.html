@@ -5,28 +5,150 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Website Widgets</title>
+  <title>My Website Widgets</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      max-width: 700px;
+      max-width: 760px;
       margin: 60px auto;
-      padding: 0 25px;
+      padding: 0 25px 80px;
+
       background: #ffffff;
       color: #222222;
     }
 
     h1 {
+      margin-bottom: 8px;
+    }
+
+    .intro {
+      color: #666666;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .generator {
+      padding: 25px;
+
+      border: 1px solid #dddddd;
+      border-radius: 14px;
+
+      margin-bottom: 40px;
+    }
+
+    label {
+      display: block;
+
+      font-size: 14px;
+      font-weight: bold;
+
+      margin-top: 18px;
+      margin-bottom: 7px;
+    }
+
+    input {
+      display: block;
+
+      width: 100%;
+
+      padding: 12px 14px;
+
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+
+      font-size: 15px;
+    }
+
+    input:focus {
+      outline: 2px solid #999999;
+      outline-offset: 1px;
+    }
+
+    button {
+      margin-top: 20px;
+
+      padding: 12px 18px;
+
+      border: 0;
+      border-radius: 8px;
+
+      background: #222222;
+      color: #ffffff;
+
+      font-size: 15px;
+
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .result {
+      display: none;
+
+      margin-top: 25px;
+      padding-top: 20px;
+
+      border-top: 1px solid #eeeeee;
+    }
+
+    .result-url {
+      padding: 12px;
+
+      background: #f5f5f5;
+
+      border-radius: 8px;
+
+      font-size: 13px;
+
+      word-break: break-all;
+
       margin-bottom: 10px;
     }
 
-    p {
-      margin-bottom: 35px;
+    .copy-message {
+      display: none;
+
+      margin-top: 10px;
+
+      font-size: 13px;
+      color: #666666;
+    }
+
+    .preview-title {
+      margin-top: 25px;
+      margin-bottom: 10px;
+
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    iframe {
+      width: 100%;
+      height: 320px;
+
+      border: 1px solid #eeeeee;
+      border-radius: 8px;
+
+      background: #ffffff;
+    }
+
+    .widgets-title {
+      margin-top: 45px;
     }
 
     .widget {
       display: block;
+
       padding: 18px 20px;
       margin-bottom: 12px;
 
@@ -59,19 +181,225 @@
 
   <h1>My Website Widgets</h1>
 
-  <p>
+  <p class="intro">
     Интерактивные элементы для моего сайта.
   </p>
 
-  <a class="widget" href="./cat-button/">
+
+  <div class="generator">
+
+    <h2>✨ Interactive Button Generator</h2>
+
+    <p>
+      Создай интерактивную кнопку для Notion
+      с увеличением и поворотом при наведении.
+    </p>
+
+
+    <label for="image">
+      Имя изображения на GitHub
+    </label>
+
+    <input
+      id="image"
+      type="text"
+      placeholder="например: kitty-Scarameow.gif"
+    >
+
+
+    <label for="link">
+      Куда должна вести кнопка
+    </label>
+
+    <input
+      id="link"
+      type="url"
+      placeholder="https://..."
+    >
+
+
+    <button onclick="createButton()">
+      Создать кнопку
+    </button>
+
+
+    <div
+      class="result"
+      id="result"
+    >
+
+      <strong>
+        Ссылка для Notion Embed:
+      </strong>
+
+      <div
+        class="result-url"
+        id="result-url"
+      ></div>
+
+      <button onclick="copyURL()">
+        Скопировать ссылку
+      </button>
+
+      <div
+        class="copy-message"
+        id="copy-message"
+      >
+        Скопировано ✓
+      </div>
+
+
+      <div class="preview-title">
+        Предпросмотр:
+      </div>
+
+      <iframe
+        id="preview"
+        title="Button preview"
+      ></iframe>
+
+    </div>
+
+  </div>
+
+
+  <h2 class="widgets-title">
+    Widgets
+  </h2>
+
+
+  <a
+    class="widget"
+    href="./cat-button/"
+  >
     <div class="widget-name">
       🐱 Darkflowertale Button
     </div>
 
     <div class="widget-description">
-      Декоративная GIF-кнопка со Скарамяуччей
+      Оригинальная кнопка со Скарамяуччей
     </div>
   </a>
+
+
+  <a
+    class="widget"
+    href="./button/"
+  >
+    <div class="widget-name">
+      ✨ Universal Interactive Button
+    </div>
+
+    <div class="widget-description">
+      Универсальный виджет для GIF и PNG
+    </div>
+  </a>
+
+
+  <script>
+
+    let generatedURL = "";
+
+
+    function createButton() {
+
+      const image =
+        document
+          .getElementById("image")
+          .value
+          .trim();
+
+      const link =
+        document
+          .getElementById("link")
+          .value
+          .trim();
+
+
+      if (!image) {
+        alert("Укажи имя изображения.");
+        return;
+      }
+
+
+      if (!link) {
+        alert("Вставь ссылку для кнопки.");
+        return;
+      }
+
+
+      const base =
+        window.location.origin +
+        window.location.pathname +
+        "button/";
+
+
+      generatedURL =
+        base +
+        "?image=" +
+        encodeURIComponent(image) +
+        "&link=" +
+        encodeURIComponent(link);
+
+
+      document
+        .getElementById("result-url")
+        .textContent =
+        generatedURL;
+
+
+      document
+        .getElementById("preview")
+        .src =
+        generatedURL;
+
+
+      document
+        .getElementById("result")
+        .style
+        .display =
+        "block";
+
+
+      document
+        .getElementById("copy-message")
+        .style
+        .display =
+        "none";
+    }
+
+
+    async function copyURL() {
+
+      if (!generatedURL) {
+        return;
+      }
+
+
+      try {
+
+        await navigator.clipboard.writeText(
+          generatedURL
+        );
+
+
+        document
+          .getElementById("copy-message")
+          .style
+          .display =
+          "block";
+
+      } catch (error) {
+
+        alert(
+          "Не удалось скопировать автоматически. " +
+          "Выдели ссылку и скопируй её вручную."
+        );
+
+      }
+    }
+
+  </script>
 
 </body>
 
