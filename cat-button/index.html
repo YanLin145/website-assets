@@ -11,7 +11,6 @@
       margin: 0;
       padding: 0;
       width: 100%;
-
       background: transparent;
       overflow: hidden;
     }
@@ -24,38 +23,28 @@
       width: 100%;
       box-sizing: border-box;
 
-      /*
-        Большая безопасная зона,
-        которая у тебя уже хорошо работала.
-      */
+      /* Рабочая зона безопасности */
       padding: 50%;
     }
 
     .art-button img {
       display: block;
 
-      /*
-        Сохраняем рабочее изменение
-        размера через рамку Notion.
-      */
+      /* Рабочее масштабирование рамкой Notion */
       width: 100%;
       height: auto;
 
+      /* Чёткая пиксельная графика */
       image-rendering: pixelated;
 
       transform: scale(1) rotate(0deg);
       transform-origin: center center;
 
       transition: transform 0.25s ease;
-
       cursor: pointer;
     }
 
-    /*
-      ВАЖНО:
-      hover теперь отслеживает именно котика,
-      а не всю область ссылки.
-    */
+    /* Hover только на самом котике */
     .art-button img:hover {
       transform: scale(1.35) rotate(12deg);
     }
