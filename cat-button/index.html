@@ -21,20 +21,17 @@
       justify-content: center;
 
       width: 100%;
-      box-sizing: border-box;
 
-      /* Рабочая зона безопасности */
+      /* Та самая настройка, с которой всё работало */
       padding: 50%;
     }
 
     .art-button img {
       display: block;
 
-      /* Рабочее масштабирование рамкой Notion */
       width: 100%;
       height: auto;
 
-      /* Чёткая пиксельная графика */
       image-rendering: pixelated;
 
       transform: scale(1) rotate(0deg);
@@ -44,8 +41,7 @@
       cursor: pointer;
     }
 
-    /* Hover только на самом котике */
-    .art-button img:hover {
+    .art-button:hover img {
       transform: scale(1.35) rotate(12deg);
     }
   </style>
