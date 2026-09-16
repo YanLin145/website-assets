@@ -10,38 +10,38 @@
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
       background: transparent;
       overflow: hidden;
     }
 
-    body {
-      width: max-content;
-      height: max-content;
-    }
-
     .art-button {
-      display: inline-block;
-      padding: 12px;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 22px;
     }
 
     .art-button img {
       display: block;
 
-      /* Оригинальный размер GIF */
-      width: auto;
+      /* Котик подстраивается под ширину рамки Notion */
+      width: 100%;
       height: auto;
 
+      /* Сохраняем пиксельную чёткость */
       image-rendering: pixelated;
 
       transform: scale(1) rotate(0deg);
-      transition: transform 0.25s ease;
-
       transform-origin: center;
+
+      transition: transform 0.25s ease;
       cursor: pointer;
     }
 
+    /* Более сильный эффект при наведении */
     .art-button:hover img {
-      transform: scale(1.1) rotate(3deg);
+      transform: scale(1.25) rotate(9deg);
     }
   </style>
 </head>
