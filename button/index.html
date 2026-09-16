@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+
+    /*
+      ОСНОВНЫЕ НАСТРОЙКИ СТРАНИЦЫ
+    */
+
     html,
     body {
       margin: 0;
@@ -15,12 +20,35 @@
       height: 100%;
 
       /*
-        Фон под тёмную тему Notion.
+        По умолчанию используется
+        светлый фон.
       */
-      background: #191919;
+      background: #ffffff;
 
       overflow: hidden;
     }
+
+
+    /*
+      Если браузер сообщает,
+      что пользователь использует
+      тёмную цветовую схему,
+      фон автоматически становится тёмным.
+    */
+
+    @media (prefers-color-scheme: dark) {
+
+      html,
+      body {
+        background: #191919;
+      }
+
+    }
+
+
+    /*
+      ЦЕНТРИРОВАНИЕ КНОПКИ
+    */
 
     body {
       display: flex;
@@ -28,13 +56,24 @@
       justify-content: center;
     }
 
+
+    /*
+      КЛИКАБЕЛЬНАЯ ОБЛАСТЬ
+    */
+
     .art-button {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
 
       cursor: pointer;
     }
+
+
+    /*
+      ИЗОБРАЖЕНИЕ
+    */
 
     .art-button img {
       display: block;
@@ -42,6 +81,9 @@
       width: auto;
       height: auto;
 
+      /*
+        Сохраняет чёткость пиксельной графики.
+      */
       image-rendering: pixelated;
 
       transform: scale(1) rotate(0deg);
@@ -50,13 +92,26 @@
       transition: transform 0.25s ease;
     }
 
+
+    /*
+      АНИМАЦИЯ ПРИ НАВЕДЕНИИ
+    */
+
     .art-button:hover img {
       transform: scale(1.35) rotate(12deg);
     }
+
   </style>
 </head>
 
+
 <body>
+
+  <!--
+    Универсальная кликабельная кнопка.
+    Изображение и ссылка подставляются
+    автоматически из URL.
+  -->
 
   <a
     class="art-button"
@@ -64,87 +119,220 @@
     href="#"
     target="_blank"
   >
+
     <img
       id="button-image"
       alt="Interactive button"
     >
+
   </a>
 
+
   <script>
-    const params = new URLSearchParams(window.location.search);
 
-    const imageName = params.get("image");
-    const targetLink = params.get("link");
+    /*
+      Читаем параметры из ссылки.
 
-    const image = document.getElementById("button-image");
-    const button = document.getElementById("button-link");
+      Например:
+
+      /button/
+      ?image=cat.gif
+      &link=https://example.com
+    */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const imageName =
+      params.get("image");
+
+
+    const targetLink =
+      params.get("link");
+
+
+    const image =
+      document.getElementById(
+        "button-image"
+      );
+
+
+    const button =
+      document.getElementById(
+        "button-link"
+      );
+
+
+    /*
+      Подставляем ссылку,
+      куда должна вести кнопка.
+    */
 
     if (targetLink) {
-      button.href = targetLink;
+
+      button.href =
+        targetLink;
+
     }
+
+
+    /*
+      Подставляем изображение
+      из папки website-assets.
+    */
 
     if (imageName) {
 
-      image.src = "../" + imageName;
+      image.src =
+        "../" + imageName;
 
-      image.onload = function () {
 
-        function resizeImage() {
+      /*
+        После загрузки изображения
+        узнаём его настоящий размер.
+      */
 
-          const frameWidth = window.innerWidth;
-          const frameHeight = window.innerHeight;
+      image.onload =
+        function () {
 
-          const imageWidth = image.naturalWidth;
-          const imageHeight = image.naturalHeight;
+
+          function resizeImage() {
+
+
+            /*
+              Размер самого Embed-виджета.
+            */
+
+            const frameWidth =
+              window.innerWidth;
+
+
+            const frameHeight =
+              window.innerHeight;
+
+
+            /*
+              Исходный размер картинки.
+            */
+
+            const imageWidth =
+              image.naturalWidth;
+
+
+            const imageHeight =
+              image.naturalHeight;
+
+
+            /*
+              Оставляем свободное место
+              вокруг изображения.
+
+              Оно необходимо для
+              увеличения и поворота
+              при наведении.
+            */
+
+            const safeArea =
+              0.60;
+
+
+            const availableWidth =
+              frameWidth *
+              safeArea;
+
+
+            const availableHeight =
+              frameHeight *
+              safeArea;
+
+
+            /*
+              Рассчитываем,
+              насколько изображение
+              можно увеличить по ширине.
+            */
+
+            const widthScale =
+              availableWidth /
+              imageWidth;
+
+
+            /*
+              Рассчитываем,
+              насколько изображение
+              можно увеличить по высоте.
+            */
+
+            const heightScale =
+              availableHeight /
+              imageHeight;
+
+
+            /*
+              Используем меньшее значение.
+
+              Благодаря этому изображение
+              целиком помещается в рамку
+              независимо от её формы.
+            */
+
+            const scale =
+              Math.min(
+                widthScale,
+                heightScale
+              );
+
+
+            /*
+              Устанавливаем итоговый
+              размер изображения.
+            */
+
+            image.style.width =
+              (
+                imageWidth *
+                scale
+              ) +
+              "px";
+
+
+            image.style.height =
+              (
+                imageHeight *
+                scale
+              ) +
+              "px";
+
+          }
+
 
           /*
-            Оставляем свободное пространство
-            для увеличения и поворота.
+            Рассчитываем размер
+            сразу после загрузки.
           */
 
-          const safeArea = 0.60;
+          resizeImage();
 
-          const availableWidth =
-            frameWidth * safeArea;
-
-          const availableHeight =
-            frameHeight * safeArea;
 
           /*
-            Вычисляем масштаб отдельно
-            для ширины и высоты.
+            Если ты растягиваешь
+            Embed в Notion,
+            размер картинки
+            пересчитывается автоматически.
           */
 
-          const widthScale =
-            availableWidth / imageWidth;
+          window.addEventListener(
+            "resize",
+            resizeImage
+          );
 
-          const heightScale =
-            availableHeight / imageHeight;
+        };
 
-          /*
-            Берём меньшее значение.
-            Благодаря этому картинка всегда
-            помещается в рамку целиком.
-          */
-
-          const scale =
-            Math.min(widthScale, heightScale);
-
-          image.style.width =
-            (imageWidth * scale) + "px";
-
-          image.style.height =
-            (imageHeight * scale) + "px";
-        }
-
-        resizeImage();
-
-        window.addEventListener(
-          "resize",
-          resizeImage
-        );
-      };
     }
+
   </script>
 
 </body>
