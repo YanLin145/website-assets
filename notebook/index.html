@@ -9,199 +9,140 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>My Website Widgets</title>
+  <title>Notebook Viewer</title>
 
   <style>
-
-    * {
-      box-sizing: border-box;
-    }
 
     html,
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
       min-height: 100%;
-
       background: #ffffff;
-      color: #222222;
+    }
 
-      font-family: Arial, sans-serif;
+    @media (prefers-color-scheme: dark) {
+
+      html,
+      body {
+        background: #191919;
+      }
+
     }
 
     body {
-      padding: 40px 20px 70px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-
-    h2 {
-      margin: 0 0 8px;
-      font-size: 22px;
-    }
-
-    .subtitle {
-      margin: 0 0 30px;
-
-      opacity: 0.6;
-      line-height: 1.5;
+      font-family: Arial, sans-serif;
     }
 
 
-    /* ===================================== */
-    /* TABS                                  */
-    /* ===================================== */
+    /* NOTEBOOK */
 
-    .tabs {
+    .notebook {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: 100%;
+
+      padding: 20px;
+
+      box-sizing: border-box;
+    }
+
+
+    /* IMAGE */
+
+    .page-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+    }
+
+    #page-image {
+      display: block;
+
+      max-width: 100%;
+      max-height: 80vh;
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
+    }
+
+
+    /* NAVIGATION */
+
+    .navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
+
       gap: 8px;
 
-      margin-bottom: 25px;
-
-      border-bottom: 1px solid #dddddd;
+      margin-top: 10px;
     }
 
-    .tab-button {
+    .page-numbers {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+
+      gap: 5px;
+    }
+
+
+    /* PAGE NUMBERS */
+
+    .page-number {
       appearance: none;
 
-      margin-bottom: -1px;
-      padding: 12px 16px;
-
       border: 0;
-      border-bottom: 2px solid transparent;
-
       background: transparent;
-      color: inherit;
+
+      padding: 4px 6px;
 
       font: inherit;
-      font-weight: 600;
+      font-size: 14px;
+
+      color: #222222;
 
       cursor: pointer;
 
-      opacity: 0.45;
+      opacity: 1;
 
       transition:
         opacity 0.15s ease,
-        border-color 0.15s ease;
+        transform 0.15s ease;
     }
 
-    .tab-button:hover {
-      opacity: 0.8;
+    .page-number:hover {
+      transform: scale(1.15);
     }
 
-    .tab-button.active {
-      opacity: 1;
-      border-bottom-color: currentColor;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-
-    /* ===================================== */
-    /* TOOL PANEL                            */
-    /* ===================================== */
-
-    .tool-panel {
-      padding: 25px;
-
-      border: 1px solid #dddddd;
-      border-radius: 14px;
-    }
-
-    .description {
-      margin: 0 0 25px;
-
-      opacity: 0.6;
-      line-height: 1.5;
-    }
-
-
-    /* ===================================== */
-    /* FORM                                  */
-    /* ===================================== */
-
-    .field {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-
-      margin-bottom: 7px;
-
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    input {
-      width: 100%;
-
-      padding: 11px 12px;
-
-      border: 1px solid #cccccc;
-      border-radius: 8px;
-
-      background: transparent;
-      color: inherit;
-
-      font: inherit;
-    }
-
-    input:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 1px;
-    }
-
-    .hint {
-      margin-top: 6px;
-
-      font-size: 12px;
-      line-height: 1.5;
-
+    .page-number.active {
       opacity: 0.5;
     }
 
 
-    /* ===================================== */
-    /* ACTION BUTTONS                        */
-    /* ===================================== */
+    /* ARROWS */
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-
-      margin-top: 22px;
-    }
-
-    .action-button {
+    .arrow {
       appearance: none;
 
-      padding: 10px 14px;
-
-      border: 1px solid #aaaaaa;
-      border-radius: 8px;
-
+      border: 0;
       background: transparent;
-      color: inherit;
 
-      font: inherit;
+      padding: 4px 8px;
+
+      font-size: 18px;
+
+      color: #222222;
 
       cursor: pointer;
 
@@ -210,347 +151,23 @@
         opacity 0.15s ease;
     }
 
-    .action-button:hover {
-      transform: translateY(-1px);
+    .arrow:hover:not(:disabled) {
+      transform: scale(1.2);
     }
 
-    .action-button.primary {
-      background: #222222;
-      color: #ffffff;
-      border-color: #222222;
-    }
-
-
-    /* ===================================== */
-    /* RESULTS                               */
-    /* ===================================== */
-
-    .result-area {
-      display: none;
-
-      margin-top: 30px;
-      padding-top: 25px;
-
-      border-top: 1px solid #dddddd;
-    }
-
-    .result-area.visible {
-      display: block;
-    }
-
-    .result-title {
-      margin: 0 0 10px;
-      font-size: 16px;
-    }
-
-    .result-url {
-      width: 100%;
-
-      padding: 12px;
-
-      border: 1px solid #cccccc;
-      border-radius: 8px;
-
-      overflow-wrap: anywhere;
-
-      font-family: monospace;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .preview-title {
-      margin-top: 25px;
-      margin-bottom: 10px;
-
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .preview-frame {
-      width: 100%;
-      height: 380px;
-
-      border: 1px solid #dddddd;
-      border-radius: 10px;
-
-      overflow: hidden;
-    }
-
-    .preview-frame iframe {
-      display: block;
-
-      width: 100%;
-      height: 100%;
-
-      border: 0;
+    .arrow:disabled {
+      opacity: 0.2;
+      cursor: default;
     }
 
 
-    /* ===================================== */
-    /* NOTEBOOK SUMMARY                      */
-    /* ===================================== */
-
-    .notebook-summary {
-      display: none;
-
-      margin-top: 20px;
-      padding: 15px;
-
-      border: 1px solid #dddddd;
-      border-radius: 10px;
-
-      font-family: monospace;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .notebook-summary.visible {
-      display: block;
-    }
-
-    .cover-line {
-      margin-bottom: 7px;
-      opacity: 0.6;
-    }
-
-
-    /* ===================================== */
-    /* MESSAGES                              */
-    /* ===================================== */
-
-    .message {
-      display: none;
-
-      margin-top: 12px;
-
-      font-size: 13px;
-    }
-
-    .message.visible {
-      display: block;
-    }
-
-
-    /* ===================================== */
-    /* MY WIDGETS                            */
-    /* ===================================== */
-
-    .library {
-      margin-top: 50px;
-      padding-top: 30px;
-
-      border-top: 1px solid #dddddd;
-    }
-
-    .library h2 {
-      margin-bottom: 18px;
-    }
-
-    .widget-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .widget-item {
-      position: relative;
-
-      width: 105px;
-    }
-
-    .widget-preview {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 105px;
-      height: 105px;
-
-      border: 1px solid #dddddd;
-      border-radius: 12px;
-
-      overflow: hidden;
-
-      background: transparent;
-
-      text-decoration: none;
-
-      transition:
-        transform 0.15s ease;
-    }
-
-    .widget-preview:hover {
-      transform: translateY(-2px);
-    }
-
-    .widget-preview img {
-      display: block;
-
-      max-width: 88%;
-      max-height: 88%;
-
-      width: auto;
-      height: auto;
-
-      object-fit: contain;
-    }
-
-    .widget-placeholder {
-      font-size: 38px;
-      opacity: 0.55;
-    }
-
-    .widget-name {
-      margin-top: 7px;
-
-      overflow: hidden;
-
-      text-align: center;
-
-      font-size: 11px;
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      opacity: 0.55;
-    }
-
-
-    /* ===================================== */
-    /* DELETE WIDGET BUTTON                  */
-    /* ===================================== */
-
-    .delete-widget {
-      position: absolute;
-
-      top: -7px;
-      right: -7px;
-
-      z-index: 5;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 24px;
-      height: 24px;
-
-      padding: 0;
-
-      border: 1px solid #cccccc;
-      border-radius: 50%;
-
-      background: #ffffff;
-      color: #222222;
-
-      font-family: Arial, sans-serif;
-      font-size: 17px;
-      line-height: 1;
-
-      cursor: pointer;
-
-      opacity: 0;
-
-      transform: scale(0.85);
-
-      transition:
-        opacity 0.15s ease,
-        transform 0.15s ease;
-    }
-
-    .widget-item:hover .delete-widget,
-    .delete-widget:focus {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .delete-widget:hover {
-      transform: scale(1.12);
-    }
-
-
-    /* ===================================== */
-    /* DARK MODE                             */
-    /* ===================================== */
+    /* DARK MODE */
 
     @media (prefers-color-scheme: dark) {
 
-      html,
-      body {
-        background: #191919;
+      .page-number,
+      .arrow {
         color: #ffffff;
-      }
-
-      .tabs,
-      .library,
-      .result-area {
-        border-color: #444444;
-      }
-
-      .tool-panel,
-      .preview-frame,
-      .widget-preview,
-      .notebook-summary {
-        border-color: #444444;
-      }
-
-      input,
-      .result-url {
-        border-color: #555555;
-      }
-
-      .action-button {
-        border-color: #666666;
-      }
-
-      .action-button.primary {
-        background: #ffffff;
-        color: #191919;
-        border-color: #ffffff;
-      }
-
-      .delete-widget {
-        background: #292929;
-        color: #ffffff;
-        border-color: #555555;
-      }
-
-    }
-
-
-    /* ===================================== */
-    /* TOUCH DEVICES                         */
-    /* ===================================== */
-
-    @media (hover: none) {
-
-      .delete-widget {
-        opacity: 0.7;
-        transform: scale(1);
-      }
-
-    }
-
-
-    /* ===================================== */
-    /* MOBILE                                */
-    /* ===================================== */
-
-    @media (max-width: 600px) {
-
-      body {
-        padding:
-          25px
-          14px
-          50px;
-      }
-
-      .tool-panel {
-        padding: 18px;
-      }
-
-      .preview-frame {
-        height: 300px;
       }
 
     }
@@ -561,866 +178,200 @@
 
 <body>
 
-  <main class="container">
+  <div class="notebook">
 
-    <h1>My Website Widgets</h1>
+    <div class="page-area">
 
-    <p class="subtitle">
-      Маленькая мастерская для создания интерактивных элементов моего сайта.
-    </p>
+      <img
+        id="page-image"
+        alt="Notebook page"
+      >
+
+    </div>
 
 
-    <!-- ================================= -->
-    <!-- TABS                              -->
-    <!-- ================================= -->
-
-    <nav class="tabs">
+    <div class="navigation">
 
       <button
-        class="tab-button active"
-        data-tab="button-tool"
+        class="arrow"
+        id="previous-page"
+        aria-label="Предыдущая страница"
       >
-        Interactive Button
+        ◀
       </button>
 
-      <button
-        class="tab-button"
-        data-tab="notebook-tool"
-      >
-        Notebook Viewer
-      </button>
-
-    </nav>
-
-
-    <!-- ================================= -->
-    <!-- INTERACTIVE BUTTON                -->
-    <!-- ================================= -->
-
-    <section
-      class="tab-content active"
-      id="button-tool"
-    >
-
-      <div class="tool-panel">
-
-        <h2>Interactive Button</h2>
-
-        <p class="description">
-          Создай кликабельное изображение с анимацией при наведении.
-        </p>
-
-
-        <div class="field">
-
-          <label for="button-image">
-            Путь к изображению
-          </label>
-
-          <input
-            id="button-image"
-            type="text"
-            placeholder="assets/gif/kitty-Scarameow.gif"
-          >
-
-          <div class="hint">
-            Можно использовать любую картинку внутри website-assets.
-          </div>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="button-link">
-            Куда ведёт кнопка
-          </label>
-
-          <input
-            id="button-link"
-            type="url"
-            placeholder="https://..."
-          >
-
-        </div>
-
-
-        <div class="actions">
-
-          <button
-            class="action-button primary"
-            id="create-button"
-          >
-            Создать кнопку
-          </button>
-
-          <button
-            class="action-button"
-            id="clear-button"
-          >
-            Очистить
-          </button>
-
-        </div>
-
-
-        <div
-          class="result-area"
-          id="button-result"
-        >
-
-          <h3 class="result-title">
-            Готовая ссылка
-          </h3>
-
-          <div
-            class="result-url"
-            id="button-url"
-          ></div>
-
-
-          <div class="actions">
-
-            <button
-              class="action-button"
-              id="copy-button"
-            >
-              Скопировать ссылку
-            </button>
-
-            <button
-              class="action-button"
-              id="save-button"
-            >
-              Сохранить?
-            </button>
-
-          </div>
-
-
-          <div class="preview-title">
-            Предпросмотр
-          </div>
-
-          <div class="preview-frame">
-
-            <iframe
-              id="button-preview"
-              title="Interactive Button Preview"
-            ></iframe>
-
-          </div>
-
-
-          <div
-            class="message"
-            id="button-message"
-          ></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================= -->
-    <!-- NOTEBOOK VIEWER                   -->
-    <!-- ================================= -->
-
-    <section
-      class="tab-content"
-      id="notebook-tool"
-    >
-
-      <div class="tool-panel">
-
-        <h2>Notebook Viewer</h2>
-
-        <p class="description">
-          Создай листаемый скетчбук.
-          Файл _00 используется как обложка,
-          а страницы автоматически начинаются с _01.
-        </p>
-
-
-        <div class="field">
-
-          <label for="notebook-name">
-            Название блокнота
-          </label>
-
-          <input
-            id="notebook-name"
-            type="text"
-            placeholder="Green Sketchbook"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="notebook-folder">
-            Папка
-          </label>
-
-          <input
-            id="notebook-folder"
-            type="text"
-            placeholder="assets/notebooks/green_sketchbook/"
-          >
-
-          <div class="hint">
-            Путь от корня website-assets.
-          </div>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="notebook-prefix">
-            Префикс файлов
-          </label>
-
-          <input
-            id="notebook-prefix"
-            type="text"
-            placeholder="green_sketchbook"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="notebook-count">
-            Количество страниц
-          </label>
-
-          <input
-            id="notebook-count"
-            type="number"
-            min="1"
-            step="1"
-            placeholder="3"
-          >
-
-          <div class="hint">
-            Обложка _00 сюда не входит.
-          </div>
-
-        </div>
-
-
-        <div class="actions">
-
-          <button
-            class="action-button primary"
-            id="create-notebook"
-          >
-            Создать блокнот
-          </button>
-
-          <button
-            class="action-button"
-            id="clear-notebook"
-          >
-            Очистить
-          </button>
-
-        </div>
-
-
-        <div
-          class="notebook-summary"
-          id="notebook-summary"
-        ></div>
-
-
-        <div
-          class="result-area"
-          id="notebook-result"
-        >
-
-          <h3 class="result-title">
-            Готовая ссылка
-          </h3>
-
-          <div
-            class="result-url"
-            id="notebook-url"
-          ></div>
-
-
-          <div class="actions">
-
-            <button
-              class="action-button"
-              id="copy-notebook"
-            >
-              Скопировать ссылку
-            </button>
-
-            <button
-              class="action-button"
-              id="save-notebook"
-            >
-              Сохранить?
-            </button>
-
-          </div>
-
-
-          <div class="preview-title">
-            Предпросмотр
-          </div>
-
-          <div class="preview-frame">
-
-            <iframe
-              id="notebook-preview"
-              title="Notebook Preview"
-            ></iframe>
-
-          </div>
-
-
-          <div
-            class="message"
-            id="notebook-message"
-          ></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================================= -->
-    <!-- MY WIDGETS                        -->
-    <!-- ================================= -->
-
-    <section class="library">
-
-      <h2>My Widgets</h2>
 
       <div
-        class="widget-grid"
-        id="widget-grid"
+        class="page-numbers"
+        id="page-numbers"
       ></div>
 
-    </section>
 
-  </main>
+      <button
+        class="arrow"
+        id="next-page"
+        aria-label="Следующая страница"
+      >
+        ➤
+      </button>
+
+    </div>
+
+  </div>
 
 
   <script>
 
-    /* ===================================== */
-    /* SETTINGS                              */
-    /* ===================================== */
+    /* -------------------------------- */
+    /* READ PAGES FROM URL              */
+    /* -------------------------------- */
 
-    const STORAGE_KEY =
-      "myWebsiteWidgets";
-
-
-    /* ===================================== */
-    /* TABS                                  */
-    /* ===================================== */
-
-    const tabButtons =
-      document.querySelectorAll(
-        ".tab-button"
-      );
-
-    const tabContents =
-      document.querySelectorAll(
-        ".tab-content"
+    const params =
+      new URLSearchParams(
+        window.location.search
       );
 
 
-    tabButtons.forEach(
-      function (button) {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-            const target =
-              button.dataset.tab;
+    const pagesParameter =
+      params.get("pages");
 
 
-            tabButtons.forEach(
-              function (item) {
-
-                item.classList.remove(
-                  "active"
-                );
-
-              }
-            );
+    let pages = [];
 
 
-            tabContents.forEach(
-              function (item) {
+    if (pagesParameter) {
 
-                item.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-            button.classList.add(
-              "active"
-            );
-
-
-            document
-              .getElementById(target)
-              .classList
-              .add("active");
-
-          }
-        );
-
-      }
-    );
-
-
-    /* ===================================== */
-    /* STORAGE                               */
-    /* ===================================== */
-
-    function getWidgets() {
-
-      try {
-
-        const saved =
-          localStorage.getItem(
-            STORAGE_KEY
+      pages =
+        pagesParameter
+          .split(",")
+          .map(
+            page => page.trim()
+          )
+          .filter(
+            page => page !== ""
           );
 
-
-        if (!saved) {
-          return [];
-        }
-
-
-        const widgets =
-          JSON.parse(saved);
-
-
-        if (
-          Array.isArray(widgets)
-        ) {
-          return widgets;
-        }
-
-
-        return [];
-
-      }
-      catch (error) {
-
-        return [];
-
-      }
-
     }
 
 
-    function saveWidgets(
-      widgets
-    ) {
+    /*
+      Safety rule:
 
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(widgets)
-      );
+      _00 is always a cover.
+      It must never appear
+      inside the notebook viewer.
+    */
 
-    }
-
-
-    function addWidget(
-      widget
-    ) {
-
-      const widgets =
-        getWidgets();
-
-
-      widgets.push(
-        widget
+    pages =
+      pages.filter(
+        page =>
+          !/_00\.[^.]+$/i.test(page)
       );
 
 
-      saveWidgets(
-        widgets
+    /* -------------------------------- */
+    /* ELEMENTS                         */
+    /* -------------------------------- */
+
+    const pageImage =
+      document.getElementById(
+        "page-image"
       );
 
 
-      renderWidgets();
-
-    }
-
-
-    /* ===================================== */
-    /* DELETE SAVED WIDGET                   */
-    /* ===================================== */
-
-    function deleteWidget(
-      index
-    ) {
-
-      const widgets =
-        getWidgets();
-
-
-      const widget =
-        widgets[index];
-
-
-      if (!widget) {
-        return;
-      }
-
-
-      const widgetName =
-        widget.name ||
-        (
-          widget.type === "notebook"
-            ? "Notebook"
-            : "Button"
-        );
-
-
-      const confirmed =
-        window.confirm(
-          "Удалить «" +
-          widgetName +
-          "» из My Widgets?\n\n" +
-          "Сам виджет и файлы на GitHub удалены не будут."
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      widgets.splice(
-        index,
-        1
+    const pageNumbers =
+      document.getElementById(
+        "page-numbers"
       );
 
 
-      saveWidgets(
-        widgets
+    const previousButton =
+      document.getElementById(
+        "previous-page"
       );
 
 
-      renderWidgets();
-
-    }
-
-
-    /* ===================================== */
-    /* PATH HELPERS                          */
-    /* ===================================== */
-
-    function cleanPath(
-      path
-    ) {
-
-      return path
-        .trim()
-        .replace(
-          /^\/+/,
-          ""
-        );
-
-    }
+    const nextButton =
+      document.getElementById(
+        "next-page"
+      );
 
 
-    function normalizeFolder(
-      folder
-    ) {
+    const navigation =
+      document.querySelector(
+        ".navigation"
+      );
 
-      folder =
-        cleanPath(folder);
 
+    let currentPage = 0;
+
+
+    /* -------------------------------- */
+    /* SHOW PAGE                        */
+    /* -------------------------------- */
+
+    function showPage(index) {
 
       if (
-        folder &&
-        !folder.endsWith("/")
+        index < 0 ||
+        index >= pages.length
       ) {
-
-        folder += "/";
-
+        return;
       }
 
 
-      return folder;
+      currentPage =
+        index;
+
+
+      pageImage.src =
+        "../" + pages[index];
+
+
+      updateNavigation();
 
     }
 
 
-    function assetUrl(
-      path
-    ) {
+    /* -------------------------------- */
+    /* CREATE PAGE NUMBERS              */
+    /* -------------------------------- */
 
-      return new URL(
-        cleanPath(path),
-        window.location.href
-      ).toString();
+    function createPageNumbers() {
 
-    }
-
-
-    /* ===================================== */
-    /* LIBRARY                               */
-    /* ===================================== */
-
-    const widgetGrid =
-      document.getElementById(
-        "widget-grid"
-      );
-
-
-    function renderWidgets() {
-
-      const widgets =
-        getWidgets();
-
-
-      widgetGrid.innerHTML =
+      pageNumbers.innerHTML =
         "";
 
 
-      if (
-        widgets.length === 0
-      ) {
+      pages.forEach(
+        function (page, index) {
 
-        const empty =
-          document.createElement(
-            "div"
-          );
-
-
-        empty.textContent =
-          "Пока ничего не сохранено.";
-
-
-        empty.style.opacity =
-          "0.5";
-
-
-        empty.style.fontSize =
-          "14px";
-
-
-        widgetGrid.appendChild(
-          empty
-        );
-
-
-        return;
-
-      }
-
-
-      widgets.forEach(
-        function (
-          widget,
-          index
-        ) {
-
-          const item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.className =
-            "widget-item";
-
-
-          /* DELETE BUTTON */
-
-          const deleteButton =
+          const button =
             document.createElement(
               "button"
             );
 
 
-          deleteButton.className =
-            "delete-widget";
+          button.className =
+            "page-number";
 
 
-          deleteButton.type =
-            "button";
+          button.textContent =
+            index + 1;
 
 
-          deleteButton.textContent =
-            "×";
-
-
-          deleteButton.title =
-            "Удалить из My Widgets";
-
-
-          deleteButton.setAttribute(
-            "aria-label",
-            "Удалить виджет"
-          );
-
-
-          deleteButton.addEventListener(
+          button.addEventListener(
             "click",
-            function (event) {
+            function () {
 
-              event.preventDefault();
-              event.stopPropagation();
-
-              deleteWidget(
-                index
-              );
+              showPage(index);
 
             }
           );
 
 
-          /* PREVIEW */
-
-          const preview =
-            document.createElement(
-              "a"
-            );
-
-
-          preview.className =
-            "widget-preview";
-
-
-          preview.href =
-            widget.url || "#";
-
-
-          preview.target =
-            "_blank";
-
-
-          let imagePath =
-            widget.preview ||
-            widget.cover ||
-            widget.image ||
-            "";
-
-
-          if (imagePath) {
-
-            const image =
-              document.createElement(
-                "img"
-              );
-
-
-            if (
-              imagePath.startsWith(
-                "http://"
-              ) ||
-              imagePath.startsWith(
-                "https://"
-              )
-            ) {
-
-              image.src =
-                imagePath;
-
-            }
-            else {
-
-              image.src =
-                assetUrl(
-                  imagePath
-                );
-
-            }
-
-
-            preview.appendChild(
-              image
-            );
-
-          }
-          else {
-
-            const placeholder =
-              document.createElement(
-                "div"
-              );
-
-
-            placeholder.className =
-              "widget-placeholder";
-
-
-            placeholder.textContent =
-              widget.type === "notebook"
-                ? "📖"
-                : "✦";
-
-
-            preview.appendChild(
-              placeholder
-            );
-
-          }
-
-
-          /* NAME */
-
-          const name =
-            document.createElement(
-              "div"
-            );
-
-
-          name.className =
-            "widget-name";
-
-
-          name.textContent =
-            widget.name ||
-            (
-              widget.type === "notebook"
-                ? "Notebook"
-                : "Button"
-            );
-
-
-          item.appendChild(
-            deleteButton
-          );
-
-
-          item.appendChild(
-            preview
-          );
-
-
-          item.appendChild(
-            name
-          );
-
-
-          widgetGrid.appendChild(
-            item
+          pageNumbers.appendChild(
+            button
           );
 
         }
@@ -1429,672 +380,94 @@
     }
 
 
-    /* ===================================== */
-    /* MESSAGES                              */
-    /* ===================================== */
+    /* -------------------------------- */
+    /* UPDATE NAVIGATION                */
+    /* -------------------------------- */
 
-    function showMessage(
-      element,
-      text
-    ) {
+    function updateNavigation() {
 
-      element.textContent =
-        text;
-
-
-      element
-        .classList
-        .add("visible");
+      const numberButtons =
+        document.querySelectorAll(
+          ".page-number"
+        );
 
 
-      setTimeout(
-        function () {
+      numberButtons.forEach(
+        function (button, index) {
 
-          element
-            .classList
-            .remove("visible");
+          button.classList.toggle(
+            "active",
+            index === currentPage
+          );
 
-        },
-        1800
+        }
       );
+
+
+      previousButton.disabled =
+        currentPage === 0;
+
+
+      nextButton.disabled =
+        currentPage ===
+        pages.length - 1;
 
     }
 
 
-    /* ===================================== */
-    /* COPY                                  */
-    /* ===================================== */
+    /* -------------------------------- */
+    /* PREVIOUS PAGE                    */
+    /* -------------------------------- */
 
-    async function copyText(
-      text,
-      message
-    ) {
+    previousButton.addEventListener(
+      "click",
+      function () {
 
-      try {
-
-        await navigator
-          .clipboard
-          .writeText(text);
-
-
-        showMessage(
-          message,
-          "Ссылка скопирована ✓"
+        showPage(
+          currentPage - 1
         );
 
       }
-      catch (error) {
+    );
 
-        showMessage(
-          message,
-          "Не получилось скопировать автоматически."
+
+    /* -------------------------------- */
+    /* NEXT PAGE                        */
+    /* -------------------------------- */
+
+    nextButton.addEventListener(
+      "click",
+      function () {
+
+        showPage(
+          currentPage + 1
         );
 
       }
+    );
+
+
+    /* -------------------------------- */
+    /* START                            */
+    /* -------------------------------- */
+
+    if (pages.length > 0) {
+
+      createPageNumbers();
+
+      showPage(0);
 
     }
 
+    else {
 
-    /* ===================================== */
-    /* INTERACTIVE BUTTON                    */
-    /* ===================================== */
+      navigation.style.display =
+        "none";
 
-    const buttonImage =
-      document.getElementById(
-        "button-image"
-      );
-
-    const buttonLink =
-      document.getElementById(
-        "button-link"
-      );
-
-    const createButton =
-      document.getElementById(
-        "create-button"
-      );
-
-    const clearButton =
-      document.getElementById(
-        "clear-button"
-      );
-
-    const buttonResult =
-      document.getElementById(
-        "button-result"
-      );
-
-    const buttonUrl =
-      document.getElementById(
-        "button-url"
-      );
-
-    const buttonPreview =
-      document.getElementById(
-        "button-preview"
-      );
-
-    const copyButton =
-      document.getElementById(
-        "copy-button"
-      );
-
-    const saveButton =
-      document.getElementById(
-        "save-button"
-      );
-
-    const buttonMessage =
-      document.getElementById(
-        "button-message"
-      );
-
-
-    let currentButtonUrl =
-      "";
-
-
-    createButton.addEventListener(
-      "click",
-      function () {
-
-        const image =
-          cleanPath(
-            buttonImage.value
-          );
-
-
-        const link =
-          buttonLink
-            .value
-            .trim();
-
-
-        if (!image) {
-
-          alert(
-            "Укажи путь к изображению."
-          );
-
-          return;
-
-        }
-
-
-        if (!link) {
-
-          alert(
-            "Укажи ссылку, куда должна вести кнопка."
-          );
-
-          return;
-
-        }
-
-
-        const url =
-          new URL(
-            "./button/",
-            window.location.href
-          );
-
-
-        url.searchParams.set(
-          "image",
-          image
-        );
-
-
-        url.searchParams.set(
-          "link",
-          link
-        );
-
-
-        currentButtonUrl =
-          url.toString();
-
-
-        buttonUrl.textContent =
-          currentButtonUrl;
-
-
-        buttonPreview.src =
-          currentButtonUrl;
-
-
-        buttonResult
-          .classList
-          .add("visible");
-
-      }
-    );
-
-
-    copyButton.addEventListener(
-      "click",
-      function () {
-
-        if (!currentButtonUrl) {
-          return;
-        }
-
-
-        copyText(
-          currentButtonUrl,
-          buttonMessage
-        );
-
-      }
-    );
-
-
-    saveButton.addEventListener(
-      "click",
-      function () {
-
-        if (!currentButtonUrl) {
-          return;
-        }
-
-
-        const image =
-          cleanPath(
-            buttonImage.value
-          );
-
-
-        addWidget({
-
-          type:
-            "button",
-
-          name:
-            image
-              .split("/")
-              .pop(),
-
-          image:
-            image,
-
-          preview:
-            image,
-
-          url:
-            currentButtonUrl
-
-        });
-
-
-        showMessage(
-          buttonMessage,
-          "Кнопка сохранена ✓"
-        );
-
-      }
-    );
-
-
-    clearButton.addEventListener(
-      "click",
-      function () {
-
-        buttonImage.value =
-          "";
-
-        buttonLink.value =
-          "";
-
-        currentButtonUrl =
-          "";
-
-        buttonUrl.textContent =
-          "";
-
-        buttonPreview.src =
-          "";
-
-
-        buttonResult
-          .classList
-          .remove("visible");
-
-
-        buttonImage.focus();
-
-      }
-    );
-
-
-    /* ===================================== */
-    /* NOTEBOOK                              */
-    /* ===================================== */
-
-    const notebookName =
-      document.getElementById(
-        "notebook-name"
-      );
-
-    const notebookFolder =
-      document.getElementById(
-        "notebook-folder"
-      );
-
-    const notebookPrefix =
-      document.getElementById(
-        "notebook-prefix"
-      );
-
-    const notebookCount =
-      document.getElementById(
-        "notebook-count"
-      );
-
-    const createNotebook =
-      document.getElementById(
-        "create-notebook"
-      );
-
-    const clearNotebook =
-      document.getElementById(
-        "clear-notebook"
-      );
-
-    const notebookSummary =
-      document.getElementById(
-        "notebook-summary"
-      );
-
-    const notebookResult =
-      document.getElementById(
-        "notebook-result"
-      );
-
-    const notebookUrl =
-      document.getElementById(
-        "notebook-url"
-      );
-
-    const notebookPreview =
-      document.getElementById(
-        "notebook-preview"
-      );
-
-    const copyNotebook =
-      document.getElementById(
-        "copy-notebook"
-      );
-
-    const saveNotebook =
-      document.getElementById(
-        "save-notebook"
-      );
-
-    const notebookMessage =
-      document.getElementById(
-        "notebook-message"
-      );
-
-
-    let currentNotebookUrl =
-      "";
-
-    let currentNotebookCover =
-      "";
-
-
-    function formatPageNumber(
-      number
-    ) {
-
-      return String(number)
-        .padStart(
-          2,
-          "0"
-        );
+      pageImage.style.display =
+        "none";
 
     }
-
-
-    createNotebook.addEventListener(
-      "click",
-      function () {
-
-        const folder =
-          normalizeFolder(
-            notebookFolder.value
-          );
-
-
-        const prefix =
-          notebookPrefix
-            .value
-            .trim();
-
-
-        const count =
-          Number.parseInt(
-            notebookCount.value,
-            10
-          );
-
-
-        if (!folder) {
-
-          alert(
-            "Укажи папку блокнота."
-          );
-
-          return;
-
-        }
-
-
-        if (!prefix) {
-
-          alert(
-            "Укажи префикс файлов."
-          );
-
-          return;
-
-        }
-
-
-        if (
-          !Number.isInteger(count) ||
-          count < 1
-        ) {
-
-          alert(
-            "Укажи количество страниц."
-          );
-
-          return;
-
-        }
-
-
-        const pages =
-          [];
-
-
-        for (
-          let page = 1;
-          page <= count;
-          page++
-        ) {
-
-          const filename =
-            prefix +
-            "_" +
-            formatPageNumber(page) +
-            ".png";
-
-
-          pages.push(
-            folder + filename
-          );
-
-        }
-
-
-        currentNotebookCover =
-          folder +
-          prefix +
-          "_00.png";
-
-
-        const url =
-          new URL(
-            "./notebook/",
-            window.location.href
-          );
-
-
-        url.searchParams.set(
-          "pages",
-          pages.join(",")
-        );
-
-
-        currentNotebookUrl =
-          url.toString();
-
-
-        notebookUrl.textContent =
-          currentNotebookUrl;
-
-
-        notebookPreview.src =
-          currentNotebookUrl;
-
-
-        let summary =
-          "<div class=\"cover-line\">" +
-          "Обложка: " +
-          currentNotebookCover +
-          "</div>";
-
-
-        pages.forEach(
-          function (
-            page,
-            index
-          ) {
-
-            summary +=
-              "<div>" +
-              (index + 1) +
-              " → " +
-              page +
-              "</div>";
-
-          }
-        );
-
-
-        notebookSummary.innerHTML =
-          summary;
-
-
-        notebookSummary
-          .classList
-          .add("visible");
-
-
-        notebookResult
-          .classList
-          .add("visible");
-
-      }
-    );
-
-
-    copyNotebook.addEventListener(
-      "click",
-      function () {
-
-        if (!currentNotebookUrl) {
-          return;
-        }
-
-
-        copyText(
-          currentNotebookUrl,
-          notebookMessage
-        );
-
-      }
-    );
-
-
-    saveNotebook.addEventListener(
-      "click",
-      function () {
-
-        if (!currentNotebookUrl) {
-          return;
-        }
-
-
-        const name =
-          notebookName
-            .value
-            .trim()
-          ||
-          notebookPrefix
-            .value
-            .trim()
-          ||
-          "Notebook";
-
-
-        addWidget({
-
-          type:
-            "notebook",
-
-          name:
-            name,
-
-          cover:
-            currentNotebookCover,
-
-          preview:
-            currentNotebookCover,
-
-          url:
-            currentNotebookUrl
-
-        });
-
-
-        showMessage(
-          notebookMessage,
-          "Блокнот сохранён ✓"
-        );
-
-      }
-    );
-
-
-    clearNotebook.addEventListener(
-      "click",
-      function () {
-
-        notebookName.value =
-          "";
-
-        notebookFolder.value =
-          "";
-
-        notebookPrefix.value =
-          "";
-
-        notebookCount.value =
-          "";
-
-
-        currentNotebookUrl =
-          "";
-
-        currentNotebookCover =
-          "";
-
-
-        notebookUrl.textContent =
-          "";
-
-        notebookPreview.src =
-          "";
-
-
-        notebookSummary.innerHTML =
-          "";
-
-
-        notebookSummary
-          .classList
-          .remove("visible");
-
-
-        notebookResult
-          .classList
-          .remove("visible");
-
-
-        notebookName.focus();
-
-      }
-    );
-
-
-    /* ===================================== */
-    /* START                                 */
-    /* ===================================== */
-
-    renderWidgets();
 
   </script>
 
