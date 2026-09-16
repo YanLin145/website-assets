@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .art-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      box-sizing: border-box;
+
+      /* Наш идеальный запас для анимации */
+      padding: 50%;
+    }
+
+    .art-button img {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      image-rendering: pixelated;
+
+      transform: scale(1) rotate(0deg);
+      transform-origin: center center;
+
+      transition: transform 0.25s ease;
+      cursor: pointer;
+    }
+
+    .art-button:hover img {
+      transform: scale(1.35) rotate(12deg);
+    }
+  </style>
+</head>
+
+<body>
+
+  <a
+    class="art-button"
+    id="button-link"
+    href="#"
+    target="_blank"
+  >
+    <img
+      id="button-image"
+      src=""
+      alt="Interactive button"
+    >
+  </a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const image = params.get("image");
+    const link = params.get("link");
+
+    const buttonImage = document.getElementById("button-image");
+    const buttonLink = document.getElementById("button-link");
+
+    if (image) {
+      buttonImage.src = "../" + image;
+    }
+
+    if (link) {
+      buttonLink.href = link;
+    }
+  </script>
+
+</body>
+
+</html>
