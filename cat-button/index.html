@@ -12,7 +12,9 @@
       padding: 0;
       width: 100%;
       background: transparent;
-      overflow: hidden;
+
+      /* Разрешаем котику выходить за свои обычные границы */
+      overflow: visible;
     }
 
     .art-button {
@@ -20,18 +22,18 @@
       width: 100%;
       box-sizing: border-box;
 
-      /* Больше свободного пространства вокруг котика */
+      /* Пространство для увеличения и поворота */
       padding: 45px;
     }
 
     .art-button img {
       display: block;
 
-      /* Котик подстраивается под ширину рамки Notion */
+      /* Размер продолжает зависеть от рамки Notion */
       width: 100%;
       height: auto;
 
-      /* Сохраняем пиксельную чёткость */
+      /* Чёткая пиксельная графика */
       image-rendering: pixelated;
 
       transform: scale(1) rotate(0deg);
@@ -41,7 +43,7 @@
       cursor: pointer;
     }
 
-    /* Сильный эффект при наведении */
+    /* Наш сильный hover оставляем без изменений */
     .art-button:hover img {
       transform: scale(1.35) rotate(12deg);
     }
