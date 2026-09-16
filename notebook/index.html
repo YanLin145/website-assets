@@ -13,25 +13,14 @@
 
   <style>
 
-    /*
-      СТРАНИЦА ВИДЖЕТА
-    */
-
     html,
     body {
       margin: 0;
       padding: 0;
-
       width: 100%;
       min-height: 100%;
-
       background: #ffffff;
     }
-
-
-    /*
-      Автоматическая тёмная тема
-    */
 
     @media (prefers-color-scheme: dark) {
 
@@ -42,21 +31,16 @@
 
     }
 
-
     body {
       font-family: Arial, sans-serif;
     }
 
 
-    /*
-      ВЕСЬ БЛОКНОТ
-    */
+    /* NOTEBOOK */
 
     .notebook {
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
 
       width: 100%;
@@ -67,27 +51,15 @@
     }
 
 
-    /*
-      ОБЛАСТЬ ИЗОБРАЖЕНИЯ
-
-      Здесь больше нет flex: 1.
-      Поэтому навигация будет находиться
-      сразу под картинкой.
-    */
+    /* IMAGE */
 
     .page-area {
       display: flex;
-
       align-items: center;
       justify-content: center;
 
       width: 100%;
     }
-
-
-    /*
-      СТРАНИЦА БЛОКНОТА
-    */
 
     #page-image {
       display: block;
@@ -102,16 +74,12 @@
     }
 
 
-    /*
-      НАВИГАЦИЯ ПОД БЛОКНОТОМ
-    */
+    /* NAVIGATION */
 
     .navigation {
       display: flex;
-
       justify-content: center;
       align-items: center;
-
       flex-wrap: wrap;
 
       gap: 8px;
@@ -119,22 +87,17 @@
       margin-top: 10px;
     }
 
-
-    /*
-      ЦИФРЫ
-    */
-
     .page-numbers {
       display: flex;
-
       justify-content: center;
       align-items: center;
-
       flex-wrap: wrap;
 
       gap: 5px;
     }
 
+
+    /* PAGE NUMBERS */
 
     .page-number {
       appearance: none;
@@ -158,28 +121,16 @@
         transform 0.15s ease;
     }
 
-
     .page-number:hover {
       transform: scale(1.15);
     }
-
-
-    /*
-      Активная страница.
-
-      Только прозрачность.
-      Никакого подчёркивания
-      или жирного текста.
-    */
 
     .page-number.active {
       opacity: 0.5;
     }
 
 
-    /*
-      СТРЕЛКИ
-    */
+    /* ARROWS */
 
     .arrow {
       appearance: none;
@@ -200,27 +151,17 @@
         opacity 0.15s ease;
     }
 
-
     .arrow:hover:not(:disabled) {
       transform: scale(1.2);
     }
 
-
-    /*
-      Если дальше листать нельзя,
-      стрелка становится менее заметной.
-    */
-
     .arrow:disabled {
       opacity: 0.2;
-
       cursor: default;
     }
 
 
-    /*
-      ТЁМНАЯ ТЕМА НАВИГАЦИИ
-    */
+    /* DARK MODE */
 
     @media (prefers-color-scheme: dark) {
 
@@ -239,9 +180,6 @@
 
   <div class="notebook">
 
-
-    <!-- ИЗОБРАЖЕНИЕ -->
-
     <div class="page-area">
 
       <img
@@ -252,12 +190,7 @@
     </div>
 
 
-    <!-- НАВИГАЦИЯ -->
-
     <div class="navigation">
-
-
-      <!-- НАЗАД -->
 
       <button
         class="arrow"
@@ -268,15 +201,11 @@
       </button>
 
 
-      <!-- ЦИФРЫ -->
-
       <div
         class="page-numbers"
         id="page-numbers"
       ></div>
 
-
-      <!-- ВПЕРЁД -->
 
       <button
         class="arrow"
@@ -286,7 +215,6 @@
         ➤
       </button>
 
-
     </div>
 
   </div>
@@ -294,9 +222,9 @@
 
   <script>
 
-    /*
-      ЧИТАЕМ СТРАНИЦЫ ИЗ URL
-    */
+    /* -------------------------------- */
+    /* READ PAGES FROM URL              */
+    /* -------------------------------- */
 
     const params =
       new URLSearchParams(
@@ -327,8 +255,23 @@
 
 
     /*
-      ЭЛЕМЕНТЫ
+      Safety rule:
+
+      _00 is always a cover.
+      It must never appear
+      inside the notebook viewer.
     */
+
+    pages =
+      pages.filter(
+        page =>
+          !/_00\.[^.]+$/i.test(page)
+      );
+
+
+    /* -------------------------------- */
+    /* ELEMENTS                         */
+    /* -------------------------------- */
 
     const pageImage =
       document.getElementById(
@@ -354,21 +297,18 @@
       );
 
 
-    /*
-      ТЕКУЩАЯ СТРАНИЦА
+    const navigation =
+      document.querySelector(
+        ".navigation"
+      );
 
-      0 = первая
-      1 = вторая
-      2 = третья
-      и так далее.
-    */
 
     let currentPage = 0;
 
 
-    /*
-      ПОКАЗАТЬ СТРАНИЦУ
-    */
+    /* -------------------------------- */
+    /* SHOW PAGE                        */
+    /* -------------------------------- */
 
     function showPage(index) {
 
@@ -376,23 +316,13 @@
         index < 0 ||
         index >= pages.length
       ) {
-
         return;
-
       }
 
 
       currentPage =
         index;
 
-
-      /*
-        Просто меняем картинку.
-
-        Никакого fade,
-        opacity или другой
-        анимации изображения.
-      */
 
       pageImage.src =
         "../" + pages[index];
@@ -403,12 +333,9 @@
     }
 
 
-    /*
-      СОЗДАЁМ ЦИФРЫ
-
-      Количество цифр автоматически
-      равно количеству изображений.
-    */
+    /* -------------------------------- */
+    /* CREATE PAGE NUMBERS              */
+    /* -------------------------------- */
 
     function createPageNumbers() {
 
@@ -418,7 +345,6 @@
 
       pages.forEach(
         function (page, index) {
-
 
           const button =
             document.createElement(
@@ -454,21 +380,11 @@
     }
 
 
-    /*
-      ОБНОВЛЯЕМ НАВИГАЦИЮ
-    */
+    /* -------------------------------- */
+    /* UPDATE NAVIGATION                */
+    /* -------------------------------- */
 
     function updateNavigation() {
-
-
-      /*
-        Активная цифра получает
-        прозрачность 50%.
-
-        Предыдущая активная цифра
-        автоматически снова становится
-        полностью непрозрачной.
-      */
 
       const numberButtons =
         document.querySelectorAll(
@@ -488,19 +404,9 @@
       );
 
 
-      /*
-        На первой странице
-        нельзя идти назад.
-      */
-
       previousButton.disabled =
         currentPage === 0;
 
-
-      /*
-        На последней странице
-        нельзя идти вперёд.
-      */
 
       nextButton.disabled =
         currentPage ===
@@ -509,9 +415,9 @@
     }
 
 
-    /*
-      СТРЕЛКА НАЗАД
-    */
+    /* -------------------------------- */
+    /* PREVIOUS PAGE                    */
+    /* -------------------------------- */
 
     previousButton.addEventListener(
       "click",
@@ -525,9 +431,9 @@
     );
 
 
-    /*
-      СТРЕЛКА ВПЕРЁД
-    */
+    /* -------------------------------- */
+    /* NEXT PAGE                        */
+    /* -------------------------------- */
 
     nextButton.addEventListener(
       "click",
@@ -541,9 +447,9 @@
     );
 
 
-    /*
-      ЗАПУСК
-    */
+    /* -------------------------------- */
+    /* START                            */
+    /* -------------------------------- */
 
     if (pages.length > 0) {
 
@@ -555,17 +461,10 @@
 
     else {
 
-      /*
-        Если в ссылке нет картинок,
-        скрываем навигацию.
-      */
+      navigation.style.display =
+        "none";
 
-      document
-        .querySelector(
-          ".navigation"
-        )
-        .style
-        .display =
+      pageImage.style.display =
         "none";
 
     }
