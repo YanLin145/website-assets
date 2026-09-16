@@ -10,27 +10,32 @@
     body {
       margin: 0;
       padding: 0;
+
       width: 100%;
+      height: 100%;
+
       background: transparent;
       overflow: hidden;
     }
 
-    .art-button {
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
 
-      width: 100%;
-      box-sizing: border-box;
+    .art-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-      /* Наш идеальный запас для анимации */
-      padding: 50%;
+      cursor: pointer;
     }
 
     .art-button img {
       display: block;
 
-      width: 100%;
+      width: auto;
       height: auto;
 
       image-rendering: pixelated;
@@ -39,7 +44,6 @@
       transform-origin: center center;
 
       transition: transform 0.25s ease;
-      cursor: pointer;
     }
 
     .art-button:hover img {
@@ -58,7 +62,6 @@
   >
     <img
       id="button-image"
-      src=""
       alt="Interactive button"
     >
   </a>
@@ -66,18 +69,77 @@
   <script>
     const params = new URLSearchParams(window.location.search);
 
-    const image = params.get("image");
-    const link = params.get("link");
+    const imageName = params.get("image");
+    const targetLink = params.get("link");
 
-    const buttonImage = document.getElementById("button-image");
-    const buttonLink = document.getElementById("button-link");
+    const image = document.getElementById("button-image");
+    const button = document.getElementById("button-link");
 
-    if (image) {
-      buttonImage.src = "../" + image;
+    if (targetLink) {
+      button.href = targetLink;
     }
 
-    if (link) {
-      buttonLink.href = link;
+    if (imageName) {
+
+      image.src = "../" + imageName;
+
+      image.onload = function () {
+
+        function resizeImage() {
+
+          const frameWidth = window.innerWidth;
+          const frameHeight = window.innerHeight;
+
+          const imageWidth = image.naturalWidth;
+          const imageHeight = image.naturalHeight;
+
+          /*
+            Оставляем свободное пространство
+            для увеличения и поворота.
+          */
+
+          const safeArea = 0.60;
+
+          const availableWidth =
+            frameWidth * safeArea;
+
+          const availableHeight =
+            frameHeight * safeArea;
+
+          /*
+            Вычисляем масштаб отдельно
+            для ширины и высоты.
+          */
+
+          const widthScale =
+            availableWidth / imageWidth;
+
+          const heightScale =
+            availableHeight / imageHeight;
+
+          /*
+            Берём меньшее значение.
+            Благодаря этому картинка всегда
+            помещается в рамку целиком.
+          */
+
+          const scale =
+            Math.min(widthScale, heightScale);
+
+          image.style.width =
+            (imageWidth * scale) + "px";
+
+          image.style.height =
+            (imageHeight * scale) + "px";
+        }
+
+        resizeImage();
+
+        window.addEventListener(
+          "resize",
+          resizeImage
+        );
+      };
     }
   </script>
 
