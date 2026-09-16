@@ -14,7 +14,9 @@
 
     body {
       font-family: Arial, sans-serif;
+
       max-width: 760px;
+
       margin: 60px auto;
       padding: 0 25px 80px;
 
@@ -22,18 +24,24 @@
       color: #222222;
     }
 
+
     h1 {
       margin-bottom: 8px;
     }
+
 
     .intro {
       color: #666666;
       margin-bottom: 40px;
     }
 
+
     h2 {
       margin-top: 0;
     }
+
+
+    /* GENERATOR */
 
     .generator {
       padding: 25px;
@@ -44,6 +52,7 @@
       margin-bottom: 40px;
     }
 
+
     label {
       display: block;
 
@@ -53,6 +62,7 @@
       margin-top: 18px;
       margin-bottom: 7px;
     }
+
 
     input {
       display: block;
@@ -67,14 +77,14 @@
       font-size: 15px;
     }
 
+
     input:focus {
       outline: 2px solid #999999;
       outline-offset: 1px;
     }
 
-    button {
-      margin-top: 20px;
 
+    button {
       padding: 12px 18px;
 
       border: 0;
@@ -86,11 +96,22 @@
       font-size: 15px;
 
       cursor: pointer;
+
+      transition: transform 0.15s ease;
     }
+
 
     button:hover {
       transform: scale(1.03);
     }
+
+
+    .create-button {
+      margin-top: 20px;
+    }
+
+
+    /* RESULT */
 
     .result {
       display: none;
@@ -100,6 +121,7 @@
 
       border-top: 1px solid #eeeeee;
     }
+
 
     .result-url {
       padding: 12px;
@@ -112,8 +134,10 @@
 
       word-break: break-all;
 
+      margin-top: 10px;
       margin-bottom: 10px;
     }
+
 
     .copy-message {
       display: none;
@@ -124,6 +148,9 @@
       color: #666666;
     }
 
+
+    /* PREVIEW */
+
     .preview-title {
       margin-top: 25px;
       margin-bottom: 10px;
@@ -131,6 +158,7 @@
       font-size: 14px;
       font-weight: bold;
     }
+
 
     iframe {
       width: 100%;
@@ -142,40 +170,103 @@
       background: #ffffff;
     }
 
-    .widgets-title {
-      margin-top: 45px;
+
+    /* SAVE + CLEAR */
+
+    .result-actions {
+      display: flex;
+
+      gap: 10px;
+
+      margin-top: 18px;
+
+      flex-wrap: wrap;
     }
 
-    .widget {
-      display: block;
 
-      padding: 18px 20px;
-      margin-bottom: 12px;
+    .save-button {
+      background: #222222;
+    }
+
+
+    .clear-button {
+      background: #eeeeee;
+      color: #222222;
+    }
+
+
+    /* WIDGET LIBRARY */
+
+    .widgets-title {
+      margin-top: 45px;
+      margin-bottom: 18px;
+    }
+
+
+    .widgets-grid {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 14px;
+
+      align-items: flex-start;
+    }
+
+
+    .saved-widget {
+      width: 90px;
+      height: 90px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 8px;
 
       border: 1px solid #dddddd;
       border-radius: 10px;
 
-      color: #222222;
-      text-decoration: none;
+      background: #fafafa;
 
-      transition: transform 0.2s ease;
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
     }
 
-    .widget:hover {
-      transform: scale(1.02);
+
+    .saved-widget:hover {
+      transform: scale(1.07);
+      border-color: #aaaaaa;
     }
 
-    .widget-name {
-      font-weight: bold;
-      margin-bottom: 5px;
+
+    .saved-widget img {
+      display: block;
+
+      max-width: 100%;
+      max-height: 100%;
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
+
+      image-rendering: pixelated;
     }
 
-    .widget-description {
+
+    .empty-widgets {
+      color: #888888;
       font-size: 14px;
-      color: #666666;
     }
+
   </style>
 </head>
+
 
 <body>
 
@@ -218,7 +309,10 @@
     >
 
 
-    <button onclick="createButton()">
+    <button
+      class="create-button"
+      onclick="createButton()"
+    >
       Создать кнопку
     </button>
 
@@ -232,14 +326,17 @@
         Ссылка для Notion Embed:
       </strong>
 
+
       <div
         class="result-url"
         id="result-url"
       ></div>
 
+
       <button onclick="copyURL()">
         Скопировать ссылку
       </button>
+
 
       <div
         class="copy-message"
@@ -253,10 +350,31 @@
         Предпросмотр:
       </div>
 
+
       <iframe
         id="preview"
         title="Button preview"
       ></iframe>
+
+
+      <div class="result-actions">
+
+        <button
+          class="save-button"
+          onclick="saveWidget()"
+        >
+          Сохранить?
+        </button>
+
+
+        <button
+          class="clear-button"
+          onclick="clearForm()"
+        >
+          Очистить форму
+        </button>
+
+      </div>
 
     </div>
 
@@ -268,38 +386,20 @@
   </h2>
 
 
-  <a
-    class="widget"
-    href="./cat-button/"
-  >
-    <div class="widget-name">
-      🐱 Darkflowertale Button
-    </div>
-
-    <div class="widget-description">
-      Оригинальная кнопка со Скарамяуччей
-    </div>
-  </a>
-
-
-  <a
-    class="widget"
-    href="./button/"
-  >
-    <div class="widget-name">
-      ✨ Universal Interactive Button
-    </div>
-
-    <div class="widget-description">
-      Универсальный виджет для GIF и PNG
-    </div>
-  </a>
+  <div
+    class="widgets-grid"
+    id="widgets-grid"
+  ></div>
 
 
   <script>
 
     let generatedURL = "";
 
+
+    /*
+      Создание ссылки
+    */
 
     function createButton() {
 
@@ -309,6 +409,7 @@
           .value
           .trim();
 
+
       const link =
         document
           .getElementById("link")
@@ -317,13 +418,17 @@
 
 
       if (!image) {
+
         alert("Укажи имя изображения.");
+
         return;
       }
 
 
       if (!link) {
+
         alert("Вставь ссылку для кнопки.");
+
         return;
       }
 
@@ -369,6 +474,11 @@
     }
 
 
+
+    /*
+      Копирование ссылки
+    */
+
     async function copyURL() {
 
       if (!generatedURL) {
@@ -389,15 +499,236 @@
           .display =
           "block";
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         alert(
-          "Не удалось скопировать автоматически. " +
-          "Выдели ссылку и скопируй её вручную."
+          "Не удалось скопировать автоматически."
         );
 
       }
     }
+
+
+
+    /*
+      Сохранение виджета
+    */
+
+    function saveWidget() {
+
+      const image =
+        document
+          .getElementById("image")
+          .value
+          .trim();
+
+
+      const link =
+        document
+          .getElementById("link")
+          .value
+          .trim();
+
+
+      if (!generatedURL || !image || !link) {
+
+        alert(
+          "Сначала создай кнопку."
+        );
+
+        return;
+      }
+
+
+      const widgets =
+        JSON.parse(
+          localStorage.getItem(
+            "myWebsiteWidgets"
+          )
+        ) || [];
+
+
+      /*
+        Не сохраняем одну и ту же
+        кнопку два раза.
+      */
+
+      const alreadyExists =
+        widgets.some(
+          widget =>
+            widget.url === generatedURL
+        );
+
+
+      if (alreadyExists) {
+
+        alert(
+          "Этот виджет уже сохранён."
+        );
+
+        return;
+      }
+
+
+      widgets.push({
+
+        image: image,
+
+        link: link,
+
+        url: generatedURL
+
+      });
+
+
+      localStorage.setItem(
+        "myWebsiteWidgets",
+        JSON.stringify(widgets)
+      );
+
+
+      renderWidgets();
+
+
+      alert("Виджет сохранён ✓");
+    }
+
+
+
+    /*
+      Очистка формы
+    */
+
+    function clearForm() {
+
+      document
+        .getElementById("image")
+        .value =
+        "";
+
+
+      document
+        .getElementById("link")
+        .value =
+        "";
+
+
+      document
+        .getElementById("preview")
+        .src =
+        "about:blank";
+
+
+      document
+        .getElementById("result")
+        .style
+        .display =
+        "none";
+
+
+      document
+        .getElementById("copy-message")
+        .style
+        .display =
+        "none";
+
+
+      generatedURL = "";
+
+
+      document
+        .getElementById("image")
+        .focus();
+    }
+
+
+
+    /*
+      Отображение сохранённых виджетов
+    */
+
+    function renderWidgets() {
+
+      const grid =
+        document
+          .getElementById("widgets-grid");
+
+
+      grid.innerHTML = "";
+
+
+      const widgets =
+        JSON.parse(
+          localStorage.getItem(
+            "myWebsiteWidgets"
+          )
+        ) || [];
+
+
+      if (widgets.length === 0) {
+
+        grid.innerHTML =
+          '<div class="empty-widgets">' +
+          'Здесь появятся сохранённые виджеты.' +
+          '</div>';
+
+        return;
+      }
+
+
+      widgets.forEach(widget => {
+
+        const item =
+          document.createElement("a");
+
+
+        item.className =
+          "saved-widget";
+
+
+        /*
+          Клик по маленькой картинке
+          открывает сам виджет.
+        */
+
+        item.href =
+          widget.url;
+
+
+        item.target =
+          "_blank";
+
+
+        const image =
+          document.createElement("img");
+
+
+        image.src =
+          "./" + widget.image;
+
+
+        image.alt =
+          "Saved widget";
+
+
+        item.appendChild(image);
+
+        grid.appendChild(item);
+
+      });
+
+    }
+
+
+
+    /*
+      Показываем сохранённые кнопки
+      сразу после открытия страницы.
+    */
+
+    renderWidgets();
 
   </script>
 
