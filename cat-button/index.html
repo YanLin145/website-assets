@@ -23,13 +23,20 @@
       width: 100%;
       box-sizing: border-box;
 
-      /* Наш идеальный запас для анимации */
-      padding: 50%;
+      /*
+        Невидимое свободное пространство вокруг котика.
+        Оно нужно для увеличения и поворота.
+      */
+      padding: 18%;
     }
 
     .art-button img {
       display: block;
 
+      /*
+        Котик продолжает зависеть от ширины
+        виджета Notion.
+      */
       width: 100%;
       height: auto;
 
@@ -52,34 +59,14 @@
 
   <a
     class="art-button"
-    id="button-link"
-    href="#"
+    href="https://yanisky.notion.site/Darkflowertale-cbdeb1a059134069abb1d192c36dcfd0"
     target="_blank"
   >
     <img
-      id="button-image"
-      src=""
-      alt="Interactive button"
+      src="../kitty-Scarameow.gif"
+      alt="Darkflowertale"
     >
   </a>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-
-    const image = params.get("image");
-    const link = params.get("link");
-
-    const buttonImage = document.getElementById("button-image");
-    const buttonLink = document.getElementById("button-link");
-
-    if (image) {
-      buttonImage.src = "../" + image;
-    }
-
-    if (link) {
-      buttonLink.href = link;
-    }
-  </script>
 
 </body>
 
