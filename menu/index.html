@@ -75,6 +75,9 @@
       font-size: 15px;
       font-weight: 650;
       letter-spacing: 0.04em;
+
+      /* YANISKY специально никак
+         не реагирует на наведение */
     }
 
 
@@ -112,6 +115,26 @@
       letter-spacing: 0.035em;
 
       cursor: pointer;
+
+      opacity: 1;
+
+      transition:
+        opacity 160ms ease;
+    }
+
+
+    /* Hover основной навигации */
+
+    .nav-link:hover {
+      opacity: 0.6;
+    }
+
+
+    /* Открытый раздел остаётся
+       слегка прозрачным */
+
+    .nav-group.open > .nav-trigger {
+      opacity: 0.6;
     }
 
 
@@ -132,6 +155,16 @@
 
       transform: rotate(45deg);
       transform-origin: center;
+
+      transition:
+        transform 180ms ease;
+    }
+
+
+    /* Поворот стрелки */
+
+    .nav-group.open .chevron {
+      transform: rotate(225deg);
     }
 
 
@@ -140,22 +173,42 @@
        ========================= */
 
     .dropdown {
-  display: none;
+      position: absolute;
 
-  position: absolute;
-  top: 100%;
-  left: 0;
+      top: 100%;
+      left: 0;
 
-  min-width: max-content;
+      min-width: max-content;
 
-  padding-top: 12px;
+      padding-top: 12px;
 
-  z-index: 10;
-}
+      z-index: 10;
+
+      visibility: hidden;
+      pointer-events: none;
+
+      opacity: 0;
+
+      transform: translateY(-5px);
+
+      transition:
+        opacity 170ms ease,
+        transform 170ms ease,
+        visibility 170ms;
+    }
+
+
+    /* Открытый dropdown */
 
     .nav-group.open .dropdown {
-      display: block;
+      visibility: visible;
+      pointer-events: auto;
+
+      opacity: 1;
+
+      transform: translateY(0);
     }
+
 
     .dropdown-link {
       display: block;
@@ -168,6 +221,18 @@
       font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.035em;
+
+      opacity: 1;
+
+      transition:
+        opacity 160ms ease;
+    }
+
+
+    /* Hover подпунктов */
+
+    .dropdown-link:hover {
+      opacity: 0.6;
     }
 
 
@@ -198,6 +263,11 @@
       color: inherit;
 
       cursor: pointer;
+
+      opacity: 1;
+
+      transition:
+        opacity 160ms ease;
     }
 
     .language-divider {
@@ -206,6 +276,10 @@
 
     .language-button:not(.active) {
       opacity: 0.55;
+    }
+
+    .language-button:not(.active):hover {
+      opacity: 0.8;
     }
 
 
@@ -245,16 +319,25 @@
   </style>
 </head>
 
+
 <body>
 
   <header class="site-header">
 
-    <a class="site-logo" href="#">
+    <!-- YANISKY → HOME -->
+
+    <a
+      class="site-logo"
+      href="https://yanisky.notion.site/HOME-3db0d2878cbc808fb034e28b97c5004c?source=copy_link"
+    >
       YANISKY
     </a>
 
 
-    <nav class="main-navigation" aria-label="Main navigation">
+    <nav
+      class="main-navigation"
+      aria-label="Main navigation"
+    >
 
 
       <!-- ART -->
@@ -267,16 +350,27 @@
           aria-expanded="false"
         >
           ART
-          <span class="chevron" aria-hidden="true"></span>
+
+          <span
+            class="chevron"
+            aria-hidden="true"
+          ></span>
         </button>
+
 
         <div class="dropdown">
 
-          <a class="dropdown-link" href="#">
+          <a
+            class="dropdown-link"
+            href="https://yanisky.notion.site/TRADISH-3db0d2878cbc803398b9e85a9b22e863?source=copy_link"
+          >
             TRADITIONAL
           </a>
 
-          <a class="dropdown-link" href="#">
+          <a
+            class="dropdown-link"
+            href="https://yanisky.notion.site/DIDG-3db0d2878cbc8008b535c5d53d41cb9b?source=copy_link"
+          >
             DIGITAL
           </a>
 
@@ -295,12 +389,20 @@
           aria-expanded="false"
         >
           PROJECTS
-          <span class="chevron" aria-hidden="true"></span>
+
+          <span
+            class="chevron"
+            aria-hidden="true"
+          ></span>
         </button>
+
 
         <div class="dropdown">
 
-          <a class="dropdown-link" href="#">
+          <a
+            class="dropdown-link"
+            href="https://yanisky.notion.site/GAME-3db0d2878cbc8062a680d9105798954d?source=copy_link"
+          >
             GAMES
           </a>
 
@@ -319,16 +421,27 @@
           aria-expanded="false"
         >
           EVENTS
-          <span class="chevron" aria-hidden="true"></span>
+
+          <span
+            class="chevron"
+            aria-hidden="true"
+          ></span>
         </button>
+
 
         <div class="dropdown">
 
-          <a class="dropdown-link" href="#">
+          <a
+            class="dropdown-link"
+            href="https://yanisky.notion.site/EXHIBITIONS-OPEN-CALLS-3de0d2878cbc80599898cef2c442a3bc?source=copy_link"
+          >
             EXHIBITIONS &amp; OPEN CALLS
           </a>
 
-          <a class="dropdown-link" href="#">
+          <a
+            class="dropdown-link"
+            href="https://yanisky.notion.site/GAME-JAMS-3de0d2878cbc80bba869dd27e02074d1?source=copy_link"
+          >
             GAME JAMS
           </a>
 
@@ -337,14 +450,24 @@
       </div>
 
 
-      <a class="nav-link" href="#">
+      <!-- ABOUT / CONTACT -->
+
+      <a
+        class="nav-link"
+        href="https://yanisky.notion.site/ME-3db0d2878cbc806881c4c1400e68421a?source=copy_link"
+      >
         ABOUT / CONTACT
       </a>
 
     </nav>
 
 
-    <div class="language-switcher" aria-label="Language">
+    <!-- LANGUAGE -->
+
+    <div
+      class="language-switcher"
+      aria-label="Language"
+    >
 
       <button
         class="language-button active"
@@ -354,7 +477,9 @@
         EN
       </button>
 
-      <span class="language-divider">|</span>
+      <span class="language-divider">
+        |
+      </span>
 
       <button
         class="language-button"
@@ -371,7 +496,8 @@
 
   <script>
 
-    const navGroups = document.querySelectorAll(".nav-group");
+    const navGroups =
+      document.querySelectorAll(".nav-group");
 
 
     function openDropdown(group) {
@@ -386,9 +512,13 @@
 
       group.classList.add("open");
 
-      const trigger = group.querySelector(".nav-trigger");
+      const trigger =
+        group.querySelector(".nav-trigger");
 
-      trigger.setAttribute("aria-expanded", "true");
+      trigger.setAttribute(
+        "aria-expanded",
+        "true"
+      );
 
     }
 
@@ -397,9 +527,13 @@
 
       group.classList.remove("open");
 
-      const trigger = group.querySelector(".nav-trigger");
+      const trigger =
+        group.querySelector(".nav-trigger");
 
-      trigger.setAttribute("aria-expanded", "false");
+      trigger.setAttribute(
+        "aria-expanded",
+        "false"
+      );
 
     }
 
@@ -415,58 +549,73 @@
 
     navGroups.forEach((group) => {
 
-      const trigger = group.querySelector(".nav-trigger");
+      const trigger =
+        group.querySelector(".nav-trigger");
 
 
-      /* Открытие при наведении */
+      /* Hover */
 
-      group.addEventListener("mouseenter", () => {
-        openDropdown(group);
-      });
-
-
-      /* Закрытие после ухода мыши */
-
-      group.addEventListener("mouseleave", () => {
-        closeDropdown(group);
-      });
-
-
-      /* Открытие и закрытие по клику */
-
-      trigger.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-        const isOpen = group.classList.contains("open");
-
-        if (isOpen) {
-          closeDropdown(group);
-        } else {
+      group.addEventListener(
+        "mouseenter",
+        () => {
           openDropdown(group);
         }
+      );
 
-      });
+
+      group.addEventListener(
+        "mouseleave",
+        () => {
+          closeDropdown(group);
+        }
+      );
+
+
+      /* Click */
+
+      trigger.addEventListener(
+        "click",
+        (event) => {
+
+          event.stopPropagation();
+
+          const isOpen =
+            group.classList.contains("open");
+
+          if (isOpen) {
+            closeDropdown(group);
+          } else {
+            openDropdown(group);
+          }
+
+        }
+      );
 
     });
 
 
-    /* Клик вне меню закрывает dropdown */
+    /* Клик вне меню */
 
-    document.addEventListener("click", () => {
-      closeAllDropdowns();
-    });
-
-
-    /* Escape закрывает dropdown */
-
-    document.addEventListener("keydown", (event) => {
-
-      if (event.key === "Escape") {
+    document.addEventListener(
+      "click",
+      () => {
         closeAllDropdowns();
       }
+    );
 
-    });
+
+    /* Escape */
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (event.key === "Escape") {
+          closeAllDropdowns();
+        }
+
+      }
+    );
 
   </script>
 
