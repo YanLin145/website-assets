@@ -122,25 +122,37 @@
     .chevron {
       display: inline-block;
 
-      font-size: 12px;
-      line-height: 1;
+      width: 6px;
+      height: 6px;
+
+      margin-top: -3px;
+
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+
+      transform: rotate(45deg);
+      transform-origin: center;
     }
 
 
     /* =========================
        DROPDOWN
-       Пока только геометрия.
-       Поведение добавим позже.
        ========================= */
 
     .dropdown {
       display: none;
 
       position: absolute;
-      top: calc(100% + 14px);
+      top: calc(100% + 12px);
       left: 0;
 
       min-width: max-content;
+
+      z-index: 10;
+    }
+
+    .nav-group.open .dropdown {
+      display: block;
     }
 
     .dropdown-link {
@@ -247,6 +259,8 @@
       </a>
 
 
+      <!-- ART -->
+
       <div class="nav-group">
 
         <button
@@ -255,7 +269,7 @@
           aria-expanded="false"
         >
           ART
-          <span class="chevron" aria-hidden="true">⌄</span>
+          <span class="chevron" aria-hidden="true"></span>
         </button>
 
         <div class="dropdown">
@@ -273,6 +287,8 @@
       </div>
 
 
+      <!-- PROJECTS -->
+
       <div class="nav-group">
 
         <button
@@ -281,7 +297,7 @@
           aria-expanded="false"
         >
           PROJECTS
-          <span class="chevron" aria-hidden="true">⌄</span>
+          <span class="chevron" aria-hidden="true"></span>
         </button>
 
         <div class="dropdown">
@@ -295,6 +311,8 @@
       </div>
 
 
+      <!-- EVENTS -->
+
       <div class="nav-group">
 
         <button
@@ -303,7 +321,7 @@
           aria-expanded="false"
         >
           EVENTS
-          <span class="chevron" aria-hidden="true">⌄</span>
+          <span class="chevron" aria-hidden="true"></span>
         </button>
 
         <div class="dropdown">
@@ -351,6 +369,108 @@
     </div>
 
   </header>
+
+
+  <script>
+
+    const navGroups = document.querySelectorAll(".nav-group");
+
+
+    function openDropdown(group) {
+
+      navGroups.forEach((otherGroup) => {
+
+        if (otherGroup !== group) {
+          closeDropdown(otherGroup);
+        }
+
+      });
+
+      group.classList.add("open");
+
+      const trigger = group.querySelector(".nav-trigger");
+
+      trigger.setAttribute("aria-expanded", "true");
+
+    }
+
+
+    function closeDropdown(group) {
+
+      group.classList.remove("open");
+
+      const trigger = group.querySelector(".nav-trigger");
+
+      trigger.setAttribute("aria-expanded", "false");
+
+    }
+
+
+    function closeAllDropdowns() {
+
+      navGroups.forEach((group) => {
+        closeDropdown(group);
+      });
+
+    }
+
+
+    navGroups.forEach((group) => {
+
+      const trigger = group.querySelector(".nav-trigger");
+
+
+      /* Открытие при наведении */
+
+      group.addEventListener("mouseenter", () => {
+        openDropdown(group);
+      });
+
+
+      /* Закрытие после ухода мыши */
+
+      group.addEventListener("mouseleave", () => {
+        closeDropdown(group);
+      });
+
+
+      /* Открытие и закрытие по клику */
+
+      trigger.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+        const isOpen = group.classList.contains("open");
+
+        if (isOpen) {
+          closeDropdown(group);
+        } else {
+          openDropdown(group);
+        }
+
+      });
+
+    });
+
+
+    /* Клик вне меню закрывает dropdown */
+
+    document.addEventListener("click", () => {
+      closeAllDropdowns();
+    });
+
+
+    /* Escape закрывает dropdown */
+
+    document.addEventListener("keydown", (event) => {
+
+      if (event.key === "Escape") {
+        closeAllDropdowns();
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
