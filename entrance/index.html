@@ -1,1 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
 
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Yanisky</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+
+      width: 100%;
+      min-height: 100%;
+
+      background: #ffffff;
+      color: #222222;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 40px 24px;
+    }
+
+
+    /* ===================================== */
+    /* WARNING                               */
+    /* ===================================== */
+
+    .warning {
+      width: 100%;
+      max-width: 620px;
+
+      text-align: center;
+    }
+
+
+    .warning-title {
+      margin: 0 0 24px;
+
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+
+    .warning-text {
+      margin: 0 auto;
+
+      max-width: 570px;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+
+    .warning-text p {
+      margin: 0 0 17px;
+    }
+
+
+    .warning-text p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    .confirmation {
+      margin-top: 32px;
+
+      font-weight: 600;
+    }
+
+
+    /* ===================================== */
+    /* BUTTON                                */
+    /* ===================================== */
+
+    .enter-button {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      margin-top: 30px;
+
+      min-width: 210px;
+
+      padding: 13px 24px;
+
+      border: 1px solid #222222;
+      border-radius: 8px;
+
+      background: #222222;
+      color: #ffffff;
+
+      text-decoration: none;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+
+    .enter-button:hover {
+      transform: translateY(-2px);
+      opacity: 0.82;
+    }
+
+
+    .enter-button:active {
+      transform: translateY(0);
+    }
+
+
+    /* ===================================== */
+    /* DARK MODE                             */
+    /* ===================================== */
+
+    @media (prefers-color-scheme: dark) {
+
+      html,
+      body {
+        background: #191919;
+        color: #ffffff;
+      }
+
+
+      .enter-button {
+        background: #ffffff;
+        color: #191919;
+
+        border-color: #ffffff;
+      }
+
+    }
+
+
+    /* ===================================== */
+    /* MOBILE                                */
+    /* ===================================== */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 32px 20px;
+      }
+
+
+      .warning-title {
+        font-size: 19px;
+      }
+
+
+      .warning-text {
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+
+      .enter-button {
+        width: 100%;
+        max-width: 280px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <main class="warning">
+
+    <h1 class="warning-title">
+      Этот сайт предназначен для посетителей старше 18 лет.
+    </h1>
+
+
+    <div class="warning-text">
+
+      <p>
+        Искусство может говорить не только о красивом.
+        Некоторые работы и проекты на этом сайте затрагивают
+        сложные или эмоционально чувствительные темы и могут
+        содержать образы, не предназначенные для
+        несовершеннолетней аудитории.
+      </p>
+
+
+      <p>
+        Пожалуйста, учитывайте это перед продолжением просмотра.
+      </p>
+
+
+      <p class="confirmation">
+        Продолжая, вы подтверждаете, что вам исполнилось 18 лет.
+      </p>
+
+    </div>
+
+
+    <a
+      class="enter-button"
+      href="https://yanisky.notion.site/HOME-3db0d2878cbc808fb034e28b97c5004c?pvs=143"
+    >
+      Мне исполнилось 18 лет
+    </a>
+
+  </main>
+
+</body>
+
+</html>
