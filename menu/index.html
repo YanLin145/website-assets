@@ -638,74 +638,151 @@
        LANGUAGE SWITCHER
        ========================= */
 
-    const languageButtons =
-      document.querySelectorAll(".language-button");
+/* =========================
+   LANGUAGE SWITCHER
+   ========================= */
 
-    const translatedElements =
-      document.querySelectorAll("[data-en][data-ru]");
+const languageButtons =
+  document.querySelectorAll(".language-button");
 
+const translatedElements =
+  document.querySelectorAll("[data-en][data-ru]");
 
-    function setLanguage(language) {
+/*
+  Единое имя настройки языка.
 
-      /* Меняем весь переводимый текст */
-
-      translatedElements.forEach((element) => {
-
-        const translation =
-          element.dataset[language];
-
-        if (translation !== undefined) {
-          element.textContent = translation;
-        }
-
-      });
+  В будущем этот же ключ будут читать
+  Footer, Journal, Personal Navigation
+  и остальные наши GitHub-виджеты.
+*/
+const LANGUAGE_STORAGE_KEY = "yaniskyLanguage";
 
 
-      /* Меняем активную кнопку EN / RU */
+function setLanguage(language) {
 
-      languageButtons.forEach((button) => {
+  /* Защита от некорректного значения */
 
-        const isActive =
-          button.dataset.language === language;
-
-        button.classList.toggle(
-          "active",
-          isActive
-        );
-
-      });
+  if (language !== "en" && language !== "ru") {
+    language = "en";
+  }
 
 
-      /* Обновляем язык документа */
+  /* Меняем переводимый текст */
 
-      document.documentElement.lang = language;
+  translatedElements.forEach((element) => {
 
+    const translation =
+      element.dataset[language];
+
+    if (translation !== undefined) {
+      element.textContent = translation;
     }
 
-
-    languageButtons.forEach((button) => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const language =
-            button.dataset.language;
-
-          setLanguage(language);
-
-        }
-      );
-
-    });
+  });
 
 
-    /* При каждом открытии страницы
-       язык всегда английский */
+  /* Меняем активную кнопку EN / RU */
 
-    setLanguage("en");
+  languageButtons.forEach((button) => {
 
-  </script>
+    const isActive =
+      button.dataset.language === language;
 
+    button.classList.toggle(
+      "active",
+      isActive
+    );
+
+  });
+
+
+  /* Обновляем язык HTML-документа */
+
+  document.documentElement.lang = language;
+
+}
+
+
+/* =========================
+   SAVE LANGUAGE
+   ========================= */
+
+function saveLanguage(language) {
+
+  localStorage.setItem(
+    LANGUAGE_STORAGE_KEY,
+    language
+  );
+
+}
+
+
+/* =========================
+   LANGUAGE BUTTONS
+   ========================= */
+
+languageButtons.forEach((button) => {
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      const language =
+        button.dataset.language;
+
+      /*
+        Сначала переключаем меню.
+      */
+
+      setLanguage(language);
+
+
+      /*
+        Затем запоминаем выбор посетителя.
+      */
+
+      saveLanguage(language);
+
+    }
+  );
+
+});
+
+
+/* =========================
+   INITIAL LANGUAGE
+   ========================= */
+
+/*
+  Проверяем, выбирал ли посетитель
+  язык раньше.
+*/
+
+const savedLanguage =
+  localStorage.getItem(
+    LANGUAGE_STORAGE_KEY
+  );
+
+
+/*
+  Если сохранён EN или RU,
+  используем его.
+
+  Если посетитель на сайте впервые,
+  используем английский.
+*/
+
+if (
+  savedLanguage === "en" ||
+  savedLanguage === "ru"
+) {
+
+  setLanguage(savedLanguage);
+
+} else {
+
+  setLanguage("en");
+
+}
 </body>
 </html>
