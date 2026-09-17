@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,16 +12,27 @@
 
   <title>Notebook Viewer</title>
 
+
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
 
     html,
     body {
       margin: 0;
       padding: 0;
+
       width: 100%;
-      min-height: 100%;
+      height: 100%;
+
       background: #ffffff;
+
+      overflow: hidden;
     }
+
 
     @media (prefers-color-scheme: dark) {
 
@@ -31,81 +43,124 @@
 
     }
 
+
     body {
       font-family: Arial, sans-serif;
     }
 
 
-    /* NOTEBOOK */
+    /* ===================================== */
+    /* NOTEBOOK                              */
+    /* ===================================== */
 
     .notebook {
+
       display: flex;
       flex-direction: column;
-      align-items: center;
 
-      width: 100%;
-
-      padding: 20px;
-
-      box-sizing: border-box;
-    }
-
-
-    /* IMAGE */
-
-    .page-area {
-      display: flex;
       align-items: center;
       justify-content: center;
 
       width: 100%;
+      height: 100%;
+
+      padding: 8px;
+
     }
 
+
+    /* ===================================== */
+    /* IMAGE AREA                            */
+    /* ===================================== */
+
+    .page-area {
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+
+      /*
+        Оставляем только небольшое место
+        для цифр и стрелок снизу.
+      */
+
+      height: calc(100% - 42px);
+
+      min-height: 0;
+
+    }
+
+
     #page-image {
+
       display: block;
 
+      /*
+        Картинка использует практически
+        всё доступное пространство.
+      */
+
       max-width: 100%;
-      max-height: 80vh;
+      max-height: 100%;
 
       width: auto;
       height: auto;
 
       object-fit: contain;
+
     }
 
 
-    /* NAVIGATION */
+    /* ===================================== */
+    /* NAVIGATION                            */
+    /* ===================================== */
 
     .navigation {
+
       display: flex;
+
       justify-content: center;
       align-items: center;
+
       flex-wrap: wrap;
 
-      gap: 8px;
+      gap: 6px;
 
-      margin-top: 10px;
+      height: 34px;
+
+      margin-top: 4px;
+
+      flex-shrink: 0;
+
     }
+
 
     .page-numbers {
+
       display: flex;
+
       justify-content: center;
       align-items: center;
+
       flex-wrap: wrap;
 
-      gap: 5px;
+      gap: 3px;
+
     }
 
 
-    /* PAGE NUMBERS */
-
     .page-number {
+
       appearance: none;
 
       border: 0;
+
       background: transparent;
 
-      padding: 4px 6px;
+      padding: 3px 5px;
 
       font: inherit;
       font-size: 14px;
@@ -119,26 +174,33 @@
       transition:
         opacity 0.15s ease,
         transform 0.15s ease;
+
     }
+
 
     .page-number:hover {
       transform: scale(1.15);
     }
+
 
     .page-number.active {
       opacity: 0.5;
     }
 
 
-    /* ARROWS */
+    /* ===================================== */
+    /* ARROWS                                */
+    /* ===================================== */
 
     .arrow {
+
       appearance: none;
 
       border: 0;
+
       background: transparent;
 
-      padding: 4px 8px;
+      padding: 3px 7px;
 
       font-size: 18px;
 
@@ -149,11 +211,14 @@
       transition:
         transform 0.15s ease,
         opacity 0.15s ease;
+
     }
+
 
     .arrow:hover:not(:disabled) {
       transform: scale(1.2);
     }
+
 
     .arrow:disabled {
       opacity: 0.2;
@@ -161,7 +226,9 @@
     }
 
 
-    /* DARK MODE */
+    /* ===================================== */
+    /* DARK MODE                             */
+    /* ===================================== */
 
     @media (prefers-color-scheme: dark) {
 
@@ -173,12 +240,15 @@
     }
 
   </style>
+
 </head>
 
 
 <body>
 
+
   <div class="notebook">
+
 
     <div class="page-area">
 
@@ -191,6 +261,7 @@
 
 
     <div class="navigation">
+
 
       <button
         class="arrow"
@@ -215,16 +286,14 @@
         ➤
       </button>
 
+
     </div>
+
 
   </div>
 
 
   <script>
-
-    /* -------------------------------- */
-    /* READ PAGES FROM URL              */
-    /* -------------------------------- */
 
     const params =
       new URLSearchParams(
@@ -255,11 +324,8 @@
 
 
     /*
-      Safety rule:
-
-      _00 is always a cover.
-      It must never appear
-      inside the notebook viewer.
+      _00 всегда игнорируем.
+      Это обложка, а не страница.
     */
 
     pages =
@@ -268,10 +334,6 @@
           !/_00\.[^.]+$/i.test(page)
       );
 
-
-    /* -------------------------------- */
-    /* ELEMENTS                         */
-    /* -------------------------------- */
 
     const pageImage =
       document.getElementById(
@@ -306,10 +368,6 @@
     let currentPage = 0;
 
 
-    /* -------------------------------- */
-    /* SHOW PAGE                        */
-    /* -------------------------------- */
-
     function showPage(index) {
 
       if (
@@ -333,10 +391,6 @@
     }
 
 
-    /* -------------------------------- */
-    /* CREATE PAGE NUMBERS              */
-    /* -------------------------------- */
-
     function createPageNumbers() {
 
       pageNumbers.innerHTML =
@@ -344,7 +398,10 @@
 
 
       pages.forEach(
-        function (page, index) {
+        function (
+          page,
+          index
+        ) {
 
           const button =
             document.createElement(
@@ -380,10 +437,6 @@
     }
 
 
-    /* -------------------------------- */
-    /* UPDATE NAVIGATION                */
-    /* -------------------------------- */
-
     function updateNavigation() {
 
       const numberButtons =
@@ -393,7 +446,10 @@
 
 
       numberButtons.forEach(
-        function (button, index) {
+        function (
+          button,
+          index
+        ) {
 
           button.classList.toggle(
             "active",
@@ -415,10 +471,6 @@
     }
 
 
-    /* -------------------------------- */
-    /* PREVIOUS PAGE                    */
-    /* -------------------------------- */
-
     previousButton.addEventListener(
       "click",
       function () {
@@ -430,10 +482,6 @@
       }
     );
 
-
-    /* -------------------------------- */
-    /* NEXT PAGE                        */
-    /* -------------------------------- */
 
     nextButton.addEventListener(
       "click",
@@ -447,22 +495,20 @@
     );
 
 
-    /* -------------------------------- */
-    /* START                            */
-    /* -------------------------------- */
-
-    if (pages.length > 0) {
+    if (
+      pages.length > 0
+    ) {
 
       createPageNumbers();
 
       showPage(0);
 
     }
-
     else {
 
       navigation.style.display =
         "none";
+
 
       pageImage.style.display =
         "none";
@@ -470,6 +516,7 @@
     }
 
   </script>
+
 
 </body>
 
