@@ -12,7 +12,10 @@
 
   <title>Yanisky</title>
 
-  <!-- FAVICON -->
+
+  <!-- ===================================== -->
+  <!-- FAVICON                               -->
+  <!-- ===================================== -->
 
   <link
     rel="icon"
@@ -54,10 +57,25 @@
 
       padding: 40px 24px;
 
+      /*
+        Современный простой шрифт.
+
+        Если Inter установлен на устройстве,
+        браузер использует его.
+
+        В остальных случаях автоматически
+        используется системный шрифт.
+      */
+
       font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
     }
 
 
@@ -66,14 +84,12 @@
     /* ===================================== */
 
     .warning {
-
       width: 100%;
       max-width: 520px;
 
       display: flex;
       flex-direction: column;
       align-items: center;
-
     }
 
 
@@ -82,46 +98,37 @@
     /* ===================================== */
 
     .warning-text {
-
       width: 100%;
 
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 400;
 
       line-height: 1.65;
 
       /*
-        Как в книжной верстке:
-        обе стороны абзаца образуют
-        ровную текстовую колонку.
+        Книжное расположение текста:
+        длинные строки выравниваются
+        по левому и правому краю.
       */
 
       text-align: justify;
 
       /*
-        Не растягиваем последнюю
-        строку каждого абзаца.
+        Последняя строка абзаца
+        остаётся естественной длины.
       */
 
       text-align-last: left;
-
     }
 
 
     .warning-text p {
-
-      margin:
-        0
-        0
-        20px;
-
+      margin: 0 0 20px;
     }
 
 
     .warning-text p:last-child {
-
       margin-bottom: 0;
-
     }
 
 
@@ -130,9 +137,7 @@
     /* ===================================== */
 
     .warning-title {
-
-      font-weight: 700;
-
+      font-weight: 600;
     }
 
 
@@ -141,9 +146,7 @@
     /* ===================================== */
 
     .confirmation {
-
-      font-weight: 700;
-
+      font-weight: 600;
     }
 
 
@@ -152,7 +155,6 @@
     /* ===================================== */
 
     .enter-button {
-
       display: inline-flex;
 
       align-items: center;
@@ -162,14 +164,9 @@
 
       min-width: 210px;
 
-      padding:
-        13px
-        24px;
+      padding: 13px 24px;
 
-      border:
-        1px solid
-        #222222;
-
+      border: 1px solid #222222;
       border-radius: 8px;
 
       background: #222222;
@@ -177,10 +174,7 @@
 
       text-decoration: none;
 
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: inherit;
 
       font-size: 14px;
       font-weight: 600;
@@ -190,25 +184,17 @@
       transition:
         transform 0.18s ease,
         opacity 0.18s ease;
-
     }
 
 
     .enter-button:hover {
-
-      transform:
-        translateY(-2px);
-
+      transform: translateY(-2px);
       opacity: 0.82;
-
     }
 
 
     .enter-button:active {
-
-      transform:
-        translateY(0);
-
+      transform: translateY(0);
     }
 
 
@@ -220,20 +206,16 @@
 
       html,
       body {
-
         background: #191919;
         color: #ffffff;
-
       }
 
 
       .enter-button {
-
         background: #ffffff;
         color: #191919;
 
         border-color: #ffffff;
-
       }
 
     }
@@ -246,43 +228,31 @@
     @media (max-width: 600px) {
 
       body {
-
-        padding:
-          30px
-          22px;
-
+        padding: 30px 22px;
       }
 
 
       .warning {
-
         max-width: 440px;
-
       }
 
 
       .warning-text {
-
         font-size: 15px;
         line-height: 1.6;
-
       }
 
 
       .warning-text p {
-
         margin-bottom: 17px;
-
       }
 
 
       .enter-button {
-
         width: 100%;
         max-width: 280px;
 
         margin-top: 27px;
-
       }
 
     }
