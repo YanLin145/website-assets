@@ -51,7 +51,6 @@
 
     .subtitle {
       margin: 0 0 30px;
-
       opacity: 0.6;
       line-height: 1.5;
     }
@@ -126,7 +125,6 @@
 
     .description {
       margin: 0 0 25px;
-
       opacity: 0.6;
       line-height: 1.5;
     }
@@ -210,7 +208,7 @@
         opacity 0.15s ease;
     }
 
-    .action-button:hover {
+    .action-button:hover:not(:disabled) {
       transform: translateY(-1px);
     }
 
@@ -218,6 +216,11 @@
       background: #222222;
       color: #ffffff;
       border-color: #222222;
+    }
+
+    .action-button:disabled {
+      opacity: 0.3;
+      cursor: default;
     }
 
 
@@ -287,30 +290,55 @@
 
 
     /* ===================================== */
-    /* NOTEBOOK SUMMARY                      */
+    /* PAGE CHECKER                          */
     /* ===================================== */
 
-    .notebook-summary {
+    .page-check-result {
       display: none;
 
-      margin-top: 20px;
-      padding: 15px;
+      margin-top: 22px;
+      padding: 16px;
 
       border: 1px solid #dddddd;
       border-radius: 10px;
-
-      font-family: monospace;
-      font-size: 13px;
-      line-height: 1.8;
     }
 
-    .notebook-summary.visible {
+    .page-check-result.visible {
       display: block;
     }
 
-    .cover-line {
-      margin-bottom: 7px;
-      opacity: 0.6;
+    .page-check-title {
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .page-check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .page-found {
+      line-height: 1.5;
+    }
+
+    .page-missing {
+      margin-top: 3px;
+
+      opacity: 0.45;
+      line-height: 1.5;
+    }
+
+    .page-count {
+      margin-top: 15px;
+      padding-top: 12px;
+
+      border-top: 1px solid #dddddd;
+
+      font-weight: 600;
     }
 
 
@@ -354,7 +382,6 @@
 
     .widget-item {
       position: relative;
-
       width: 105px;
     }
 
@@ -372,7 +399,6 @@
       overflow: hidden;
 
       background: transparent;
-
       text-decoration: none;
 
       transition:
@@ -417,7 +443,7 @@
 
 
     /* ===================================== */
-    /* DELETE WIDGET BUTTON                  */
+    /* DELETE WIDGET                         */
     /* ===================================== */
 
     .delete-widget {
@@ -490,7 +516,11 @@
       .tool-panel,
       .preview-frame,
       .widget-preview,
-      .notebook-summary {
+      .page-check-result {
+        border-color: #444444;
+      }
+
+      .page-count {
         border-color: #444444;
       }
 
@@ -519,7 +549,7 @@
 
 
     /* ===================================== */
-    /* TOUCH DEVICES                         */
+    /* TOUCH                                 */
     /* ===================================== */
 
     @media (hover: none) {
@@ -539,10 +569,7 @@
     @media (max-width: 600px) {
 
       body {
-        padding:
-          25px
-          14px
-          50px;
+        padding: 25px 14px 50px;
       }
 
       .tool-panel {
@@ -738,9 +765,8 @@
         <h2>Notebook Viewer</h2>
 
         <p class="description">
-          Создай листаемый скетчбук.
-          Файл _00 используется как обложка,
-          а страницы автоматически начинаются с _01.
+          Укажи папку и префикс. Генератор сам найдёт страницы,
+          начиная с _01. Файл _00 используется только как обложка.
         </p>
 
 
@@ -790,25 +816,8 @@
             placeholder="green_sketchbook"
           >
 
-        </div>
-
-
-        <div class="field">
-
-          <label for="notebook-count">
-            Количество страниц
-          </label>
-
-          <input
-            id="notebook-count"
-            type="number"
-            min="1"
-            step="1"
-            placeholder="3"
-          >
-
           <div class="hint">
-            Обложка _00 сюда не входит.
+            Например: green_sketchbook_01.png
           </div>
 
         </div>
@@ -818,9 +827,9 @@
 
           <button
             class="action-button primary"
-            id="create-notebook"
+            id="check-pages"
           >
-            Создать блокнот
+            Проверить страницы
           </button>
 
           <button
@@ -834,9 +843,41 @@
 
 
         <div
-          class="notebook-summary"
-          id="notebook-summary"
-        ></div>
+          class="page-check-result"
+          id="page-check-result"
+        >
+
+          <div
+            class="page-check-title"
+            id="page-check-title"
+          >
+            Проверка страниц
+          </div>
+
+          <div
+            class="page-check-list"
+            id="page-check-list"
+          ></div>
+
+          <div
+            class="page-count"
+            id="page-count"
+          ></div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="action-button primary"
+            id="create-notebook"
+            disabled
+          >
+            Создать блокнот
+          </button>
+
+        </div>
 
 
         <div
@@ -925,6 +966,9 @@
 
     const STORAGE_KEY =
       "myWebsiteWidgets";
+
+    const MAX_NOTEBOOK_PAGES =
+      200;
 
 
     /* ===================================== */
@@ -1069,10 +1113,6 @@
     }
 
 
-    /* ===================================== */
-    /* DELETE SAVED WIDGET                   */
-    /* ===================================== */
-
     function deleteWidget(
       index
     ) {
@@ -1182,6 +1222,19 @@
     }
 
 
+    function formatPageNumber(
+      number
+    ) {
+
+      return String(number)
+        .padStart(
+          2,
+          "0"
+        );
+
+    }
+
+
     /* ===================================== */
     /* LIBRARY                               */
     /* ===================================== */
@@ -1250,8 +1303,6 @@
             "widget-item";
 
 
-          /* DELETE BUTTON */
-
           const deleteButton =
             document.createElement(
               "button"
@@ -1261,14 +1312,11 @@
           deleteButton.className =
             "delete-widget";
 
-
           deleteButton.type =
             "button";
 
-
           deleteButton.textContent =
             "×";
-
 
           deleteButton.title =
             "Удалить из My Widgets";
@@ -1295,8 +1343,6 @@
           );
 
 
-          /* PREVIEW */
-
           const preview =
             document.createElement(
               "a"
@@ -1306,16 +1352,14 @@
           preview.className =
             "widget-preview";
 
-
           preview.href =
             widget.url || "#";
-
 
           preview.target =
             "_blank";
 
 
-          let imagePath =
+          const imagePath =
             widget.preview ||
             widget.cover ||
             widget.image ||
@@ -1383,8 +1427,6 @@
           }
 
 
-          /* NAME */
-
           const name =
             document.createElement(
               "div"
@@ -1408,11 +1450,9 @@
             deleteButton
           );
 
-
           item.appendChild(
             preview
           );
-
 
           item.appendChild(
             name
@@ -1745,24 +1785,39 @@
         "notebook-prefix"
       );
 
-    const notebookCount =
+    const checkPagesButton =
       document.getElementById(
-        "notebook-count"
+        "check-pages"
       );
 
-    const createNotebook =
+    const createNotebookButton =
       document.getElementById(
         "create-notebook"
       );
 
-    const clearNotebook =
+    const clearNotebookButton =
       document.getElementById(
         "clear-notebook"
       );
 
-    const notebookSummary =
+    const pageCheckResult =
       document.getElementById(
-        "notebook-summary"
+        "page-check-result"
+      );
+
+    const pageCheckTitle =
+      document.getElementById(
+        "page-check-title"
+      );
+
+    const pageCheckList =
+      document.getElementById(
+        "page-check-list"
+      );
+
+    const pageCount =
+      document.getElementById(
+        "page-count"
       );
 
     const notebookResult =
@@ -1796,6 +1851,9 @@
       );
 
 
+    let foundNotebookPages =
+      [];
+
     let currentNotebookUrl =
       "";
 
@@ -1803,22 +1861,107 @@
       "";
 
 
-    function formatPageNumber(
-      number
-    ) {
+    /* ===================================== */
+    /* RESET PAGE CHECK                      */
+    /* ===================================== */
 
-      return String(number)
-        .padStart(
-          2,
-          "0"
-        );
+    function resetNotebookCheck() {
+
+      foundNotebookPages =
+        [];
+
+      currentNotebookUrl =
+        "";
+
+      currentNotebookCover =
+        "";
+
+
+      createNotebookButton.disabled =
+        true;
+
+
+      pageCheckResult
+        .classList
+        .remove("visible");
+
+
+      pageCheckList.innerHTML =
+        "";
+
+      pageCount.textContent =
+        "";
+
+
+      notebookResult
+        .classList
+        .remove("visible");
+
+
+      notebookUrl.textContent =
+        "";
+
+      notebookPreview.src =
+        "";
 
     }
 
 
-    createNotebook.addEventListener(
+    notebookFolder.addEventListener(
+      "input",
+      resetNotebookCheck
+    );
+
+
+    notebookPrefix.addEventListener(
+      "input",
+      resetNotebookCheck
+    );
+
+
+    /* ===================================== */
+    /* FILE CHECK                            */
+    /* ===================================== */
+
+    async function fileExists(
+      path
+    ) {
+
+      const url =
+        assetUrl(path);
+
+
+      try {
+
+        const response =
+          await fetch(
+            url,
+            {
+              method: "GET",
+              cache: "no-store"
+            }
+          );
+
+
+        return response.ok;
+
+      }
+      catch (error) {
+
+        return false;
+
+      }
+
+    }
+
+
+    /* ===================================== */
+    /* CHECK NOTEBOOK PAGES                  */
+    /* ===================================== */
+
+    checkPagesButton.addEventListener(
       "click",
-      function () {
+      async function () {
 
         const folder =
           normalizeFolder(
@@ -1830,13 +1973,6 @@
           notebookPrefix
             .value
             .trim();
-
-
-        const count =
-          Number.parseInt(
-            notebookCount.value,
-            10
-          );
 
 
         if (!folder) {
@@ -1861,27 +1997,43 @@
         }
 
 
-        if (
-          !Number.isInteger(count) ||
-          count < 1
-        ) {
+        resetNotebookCheck();
 
-          alert(
-            "Укажи количество страниц."
-          );
 
-          return;
+        checkPagesButton.disabled =
+          true;
 
-        }
+
+        checkPagesButton.textContent =
+          "Проверяю...";
+
+
+        pageCheckResult
+          .classList
+          .add("visible");
+
+
+        pageCheckTitle.textContent =
+          "Проверка страниц...";
+
+
+        currentNotebookCover =
+          folder +
+          prefix +
+          "_00.png";
 
 
         const pages =
           [];
 
 
+        let firstMissingPath =
+          "";
+
+
         for (
           let page = 1;
-          page <= count;
+          page <= MAX_NOTEBOOK_PAGES;
           page++
         ) {
 
@@ -1892,17 +2044,140 @@
             ".png";
 
 
+          const path =
+            folder +
+            filename;
+
+
+          const exists =
+            await fileExists(path);
+
+
+          if (!exists) {
+
+            firstMissingPath =
+              path;
+
+            break;
+
+          }
+
+
           pages.push(
-            folder + filename
+            path
+          );
+
+
+          const line =
+            document.createElement(
+              "div"
+            );
+
+
+          line.className =
+            "page-found";
+
+
+          line.textContent =
+            "✓ " +
+            filename;
+
+
+          pageCheckList.appendChild(
+            line
           );
 
         }
 
 
-        currentNotebookCover =
-          folder +
-          prefix +
-          "_00.png";
+        foundNotebookPages =
+          pages;
+
+
+        if (firstMissingPath) {
+
+          const missingLine =
+            document.createElement(
+              "div"
+            );
+
+
+          missingLine.className =
+            "page-missing";
+
+
+          missingLine.textContent =
+            "✕ " +
+            firstMissingPath
+              .split("/")
+              .pop() +
+            " - не найден";
+
+
+          pageCheckList.appendChild(
+            missingLine
+          );
+
+        }
+
+
+        if (
+          foundNotebookPages.length > 0
+        ) {
+
+          pageCheckTitle.textContent =
+            "Страницы найдены ✓";
+
+
+          pageCount.textContent =
+            "Найдено страниц: " +
+            foundNotebookPages.length;
+
+
+          createNotebookButton.disabled =
+            false;
+
+        }
+        else {
+
+          pageCheckTitle.textContent =
+            "Страницы не найдены";
+
+
+          pageCount.textContent =
+            "Файл _01.png не найден. Проверь папку и префикс.";
+
+
+          createNotebookButton.disabled =
+            true;
+
+        }
+
+
+        checkPagesButton.disabled =
+          false;
+
+
+        checkPagesButton.textContent =
+          "Проверить страницы";
+
+      }
+    );
+
+
+    /* ===================================== */
+    /* CREATE NOTEBOOK                       */
+    /* ===================================== */
+
+    createNotebookButton.addEventListener(
+      "click",
+      function () {
+
+        if (
+          foundNotebookPages.length === 0
+        ) {
+          return;
+        }
 
 
         const url =
@@ -1914,7 +2189,7 @@
 
         url.searchParams.set(
           "pages",
-          pages.join(",")
+          foundNotebookPages.join(",")
         );
 
 
@@ -1930,39 +2205,6 @@
           currentNotebookUrl;
 
 
-        let summary =
-          "<div class=\"cover-line\">" +
-          "Обложка: " +
-          currentNotebookCover +
-          "</div>";
-
-
-        pages.forEach(
-          function (
-            page,
-            index
-          ) {
-
-            summary +=
-              "<div>" +
-              (index + 1) +
-              " → " +
-              page +
-              "</div>";
-
-          }
-        );
-
-
-        notebookSummary.innerHTML =
-          summary;
-
-
-        notebookSummary
-          .classList
-          .add("visible");
-
-
         notebookResult
           .classList
           .add("visible");
@@ -1970,6 +2212,10 @@
       }
     );
 
+
+    /* ===================================== */
+    /* COPY NOTEBOOK                         */
+    /* ===================================== */
 
     copyNotebook.addEventListener(
       "click",
@@ -1988,6 +2234,10 @@
       }
     );
 
+
+    /* ===================================== */
+    /* SAVE NOTEBOOK                         */
+    /* ===================================== */
 
     saveNotebook.addEventListener(
       "click",
@@ -2018,6 +2268,19 @@
           name:
             name,
 
+          folder:
+            normalizeFolder(
+              notebookFolder.value
+            ),
+
+          prefix:
+            notebookPrefix
+              .value
+              .trim(),
+
+          pages:
+            foundNotebookPages.length,
+
           cover:
             currentNotebookCover,
 
@@ -2039,7 +2302,11 @@
     );
 
 
-    clearNotebook.addEventListener(
+    /* ===================================== */
+    /* CLEAR NOTEBOOK                        */
+    /* ===================================== */
+
+    clearNotebookButton.addEventListener(
       "click",
       function () {
 
@@ -2052,36 +2319,8 @@
         notebookPrefix.value =
           "";
 
-        notebookCount.value =
-          "";
 
-
-        currentNotebookUrl =
-          "";
-
-        currentNotebookCover =
-          "";
-
-
-        notebookUrl.textContent =
-          "";
-
-        notebookPreview.src =
-          "";
-
-
-        notebookSummary.innerHTML =
-          "";
-
-
-        notebookSummary
-          .classList
-          .remove("visible");
-
-
-        notebookResult
-          .classList
-          .remove("visible");
+        resetNotebookCheck();
 
 
         notebookName.focus();
