@@ -177,11 +177,6 @@
 
       min-width: max-content;
 
-      /*
-        Эта зона специально остаётся.
-        Благодаря ей dropdown не исчезает,
-        пока курсор движется от меню вниз.
-      */
       padding-top: 12px;
 
       z-index: 10;
@@ -279,6 +274,81 @@
 
 
     /* =========================
+       MOBILE BUTTON
+       ========================= */
+
+    .mobile-menu-button {
+      display: none;
+
+      width: 28px;
+      height: 28px;
+
+      margin: 0 0 0 auto;
+      padding: 0;
+
+      position: relative;
+
+      border: 0;
+      background: none;
+
+      color: inherit;
+
+      cursor: pointer;
+    }
+
+
+    .mobile-menu-line {
+      position: absolute;
+
+      left: 4px;
+
+      width: 20px;
+      height: 1px;
+
+      background: currentColor;
+
+      transform-origin: center;
+
+      transition:
+        transform 220ms ease,
+        top 220ms ease,
+        opacity 160ms ease;
+    }
+
+    .mobile-menu-line:nth-child(1) {
+      top: 8px;
+    }
+
+    .mobile-menu-line:nth-child(2) {
+      top: 14px;
+    }
+
+    .mobile-menu-line:nth-child(3) {
+      top: 20px;
+    }
+
+
+    /* ☰ → × */
+
+    .site-header.mobile-open
+    .mobile-menu-line:nth-child(1) {
+      top: 14px;
+      transform: rotate(45deg);
+    }
+
+    .site-header.mobile-open
+    .mobile-menu-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .site-header.mobile-open
+    .mobile-menu-line:nth-child(3) {
+      top: 14px;
+      transform: rotate(-45deg);
+    }
+
+
+    /* =========================
        DARK MODE
        ========================= */
 
@@ -296,7 +366,7 @@
        NARROW DESKTOP
        ========================= */
 
-    @media (max-width: 900px) {
+    @media (max-width: 900px) and (min-width: 701px) {
 
       .site-header {
         padding-left: 20px;
@@ -307,6 +377,224 @@
 
       .main-navigation {
         gap: 20px;
+      }
+
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 700px) {
+
+      .site-header {
+        min-height: 60px;
+
+        display: grid;
+
+        grid-template-columns:
+          1fr auto;
+
+        align-items: center;
+
+        padding:
+          0 20px;
+
+        gap: 0;
+
+        white-space: normal;
+      }
+
+
+      /* Logo */
+
+      .site-logo {
+        grid-column: 1;
+        grid-row: 1;
+
+        font-size: 15px;
+      }
+
+      /*
+        На touch-экране не используем
+        desktop hover-анимацию логотипа.
+      */
+
+      .site-logo:hover {
+        letter-spacing: 0.04em;
+      }
+
+
+      /* Hamburger */
+
+      .mobile-menu-button {
+        display: block;
+
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+
+      /* Main navigation */
+
+      .main-navigation {
+        grid-column: 1 / -1;
+        grid-row: 2;
+
+        display: none;
+
+        width: 100%;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 0;
+
+        padding:
+          8px 0 10px;
+      }
+
+
+      .site-header.mobile-open
+      .main-navigation {
+        display: flex;
+      }
+
+
+      /* Top level links */
+
+      .nav-group {
+        width: 100%;
+      }
+
+      .nav-link {
+        width: 100%;
+
+        min-height: 44px;
+
+        justify-content: space-between;
+
+        font-size: 13px;
+
+        text-align: left;
+      }
+
+
+      /*
+        ABOUT не имеет стрелки,
+        поэтому текст остаётся слева.
+      */
+
+      a.nav-link {
+        justify-content: flex-start;
+      }
+
+
+      /*
+        На мобильном hover не должен
+        быть главным состоянием.
+      */
+
+      .nav-link:hover {
+        opacity: 1;
+      }
+
+      .nav-group.open > .nav-trigger {
+        opacity: 0.6;
+      }
+
+
+      /* Chevron */
+
+      .chevron {
+        margin-right: 2px;
+      }
+
+
+      /* Dropdown */
+
+      .dropdown {
+        position: static;
+
+        min-width: 0;
+        width: 100%;
+
+        padding-top: 0;
+        padding-left: 16px;
+
+        /*
+          В мобильной версии dropdown
+          участвует в высоте самого меню.
+        */
+
+        max-height: 0;
+
+        overflow: hidden;
+
+        visibility: hidden;
+        pointer-events: none;
+
+        opacity: 0;
+
+        transform: none;
+
+        transition:
+          max-height 240ms ease,
+          opacity 180ms ease,
+          visibility 180ms;
+      }
+
+
+      .nav-group.open .dropdown {
+        max-height: 160px;
+
+        visibility: visible;
+        pointer-events: auto;
+
+        opacity: 1;
+
+        transform: none;
+      }
+
+
+      .dropdown-link {
+        min-height: 38px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0;
+
+        font-size: 12px;
+      }
+
+
+      .dropdown-link:hover {
+        opacity: 1;
+      }
+
+
+      /* Language */
+
+      .language-switcher {
+        display: none;
+
+        grid-column: 1 / -1;
+        grid-row: 3;
+
+        margin-left: 0;
+
+        padding:
+          8px 0 20px;
+
+        font-size: 12px;
+      }
+
+
+      .site-header.mobile-open
+      .language-switcher {
+        display: flex;
       }
 
     }
@@ -330,6 +618,24 @@
     >
       YANISKY
     </a>
+
+
+    <!-- =========================
+         MOBILE BUTTON
+         ========================= -->
+
+    <button
+      class="mobile-menu-button"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+
+      <span class="mobile-menu-line"></span>
+      <span class="mobile-menu-line"></span>
+      <span class="mobile-menu-line"></span>
+
+    </button>
 
 
     <!-- =========================
@@ -485,7 +791,7 @@
       </div>
 
 
-      <!-- ABOUT / CONTACT -->
+      <!-- ABOUT -->
 
       <a
         class="nav-link"
@@ -500,7 +806,7 @@
 
 
     <!-- =========================
-         LANGUAGE SWITCHER
+         LANGUAGE
          ========================= -->
 
     <div
@@ -536,12 +842,35 @@
   <script>
 
     /* =========================
-       DROPDOWNS
+       ELEMENTS
        ========================= */
+
+    const siteHeader =
+      document.querySelector(".site-header");
+
+    const mobileMenuButton =
+      document.querySelector(".mobile-menu-button");
 
     const navGroups =
       document.querySelectorAll(".nav-group");
 
+
+    /* =========================
+       MOBILE CHECK
+       ========================= */
+
+    function isMobile() {
+
+      return window.matchMedia(
+        "(max-width: 700px)"
+      ).matches;
+
+    }
+
+
+    /* =========================
+       DROPDOWNS
+       ========================= */
 
     function openDropdown(group) {
 
@@ -596,12 +925,19 @@
         group.querySelector(".nav-trigger");
 
 
-      /* Hover */
+      /*
+        Hover работает только
+        на desktop.
+      */
 
       group.addEventListener(
         "mouseenter",
         () => {
-          openDropdown(group);
+
+          if (!isMobile()) {
+            openDropdown(group);
+          }
+
         }
       );
 
@@ -609,12 +945,19 @@
       group.addEventListener(
         "mouseleave",
         () => {
-          closeDropdown(group);
+
+          if (!isMobile()) {
+            closeDropdown(group);
+          }
+
         }
       );
 
 
-      /* Click */
+      /*
+        Click работает и на desktop,
+        и на mobile.
+      */
 
       trigger.addEventListener(
         "click",
@@ -637,24 +980,65 @@
     });
 
 
-    /* Клик вне dropdown */
+    /* =========================
+       MOBILE MENU
+       ========================= */
 
-    document.addEventListener(
+    function openMobileMenu() {
+
+      siteHeader.classList.add(
+        "mobile-open"
+      );
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        "Close menu"
+      );
+
+    }
+
+
+    function closeMobileMenu() {
+
+      siteHeader.classList.remove(
+        "mobile-open"
+      );
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        "Open menu"
+      );
+
+      closeAllDropdowns();
+
+    }
+
+
+    mobileMenuButton.addEventListener(
       "click",
-      () => {
-        closeAllDropdowns();
-      }
-    );
-
-
-    /* Escape закрывает dropdown */
-
-    document.addEventListener(
-      "keydown",
       (event) => {
 
-        if (event.key === "Escape") {
-          closeAllDropdowns();
+        event.stopPropagation();
+
+        const isOpen =
+          siteHeader.classList.contains(
+            "mobile-open"
+          );
+
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
         }
 
       }
@@ -662,42 +1046,104 @@
 
 
     /* =========================
-       LANGUAGE SWITCHER
+       CLICK OUTSIDE
+       ========================= */
+
+    document.addEventListener(
+      "click",
+      (event) => {
+
+        if (
+          !siteHeader.contains(
+            event.target
+          )
+        ) {
+
+          closeAllDropdowns();
+
+          if (isMobile()) {
+            closeMobileMenu();
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ESCAPE
+       ========================= */
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (event.key === "Escape") {
+
+          closeAllDropdowns();
+
+          if (isMobile()) {
+            closeMobileMenu();
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       RESIZE
+       ========================= */
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        /*
+          Если пользователь открыл
+          mobile menu, а потом расширил
+          окно до desktop, очищаем
+          мобильное состояние.
+        */
+
+        if (!isMobile()) {
+
+          siteHeader.classList.remove(
+            "mobile-open"
+          );
+
+          mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       LANGUAGE
        ========================= */
 
     const languageButtons =
-      document.querySelectorAll(".language-button");
+      document.querySelectorAll(
+        ".language-button"
+      );
 
     const translatedElements =
-      document.querySelectorAll("[data-en][data-ru]");
-
-
-    /*
-      Это единый ключ языка
-      для всего будущего сайта.
-
-      Его позже смогут читать:
-      menu
-      footer
-      journal
-      personal navigation
-      и другие GitHub-виджеты.
-    */
+      document.querySelectorAll(
+        "[data-en][data-ru]"
+      );
 
     const LANGUAGE_STORAGE_KEY =
       "yaniskyLanguage";
 
 
-    /* =========================
-       SET LANGUAGE
-       ========================= */
-
     function setLanguage(language) {
-
-
-      /*
-        Защита от неправильного значения.
-      */
 
       if (
         language !== "en" &&
@@ -709,18 +1155,15 @@
       }
 
 
-      /*
-        Переводим все элементы,
-        у которых есть data-en и data-ru.
-      */
-
       translatedElements.forEach(
         (element) => {
 
           const translation =
             element.dataset[language];
 
-          if (translation !== undefined) {
+          if (
+            translation !== undefined
+          ) {
 
             element.textContent =
               translation;
@@ -731,16 +1174,12 @@
       );
 
 
-      /*
-        Показываем,
-        какой язык сейчас активен.
-      */
-
       languageButtons.forEach(
         (button) => {
 
           const isActive =
-            button.dataset.language === language;
+            button.dataset.language ===
+            language;
 
           button.classList.toggle(
             "active",
@@ -751,20 +1190,11 @@
       );
 
 
-      /*
-        Обновляем атрибут lang
-        у HTML-документа.
-      */
-
       document.documentElement.lang =
         language;
 
     }
 
-
-    /* =========================
-       SAVE LANGUAGE
-       ========================= */
 
     function saveLanguage(language) {
 
@@ -776,32 +1206,19 @@
     }
 
 
-    /* =========================
-       LANGUAGE BUTTON CLICKS
-       ========================= */
-
     languageButtons.forEach(
       (button) => {
 
         button.addEventListener(
           "click",
-          () => {
+          (event) => {
+
+            event.stopPropagation();
 
             const language =
               button.dataset.language;
 
-
-            /*
-              Сразу переключаем язык.
-            */
-
             setLanguage(language);
-
-
-            /*
-              Запоминаем выбор.
-            */
-
             saveLanguage(language);
 
           }
@@ -812,27 +1229,14 @@
 
 
     /* =========================
-       INITIAL LANGUAGE
+       RESTORE LANGUAGE
        ========================= */
-
-    /*
-      Проверяем,
-      выбирал ли посетитель язык раньше.
-    */
 
     const savedLanguage =
       localStorage.getItem(
         LANGUAGE_STORAGE_KEY
       );
 
-
-    /*
-      Если язык уже сохранён,
-      восстанавливаем его.
-
-      Если посетитель здесь впервые,
-      сайт открывается на английском.
-    */
 
     if (
       savedLanguage === "en" ||
